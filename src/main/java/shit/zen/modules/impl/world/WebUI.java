@@ -9,7 +9,9 @@ import java.net.URISyntaxException;
 import shit.zen.modules.Category;
 import shit.zen.modules.Module;
 import shit.zen.network.webui.CategoriesHandler;
+import shit.zen.network.webui.ApplyPresetHandler;
 import shit.zen.network.webui.ModulesHandler;
+import shit.zen.network.webui.PresetsHandler;
 import shit.zen.network.webui.SetSettingHandler;
 import shit.zen.network.webui.SettingsHandler;
 import shit.zen.network.webui.StaticFileHandler;
@@ -62,6 +64,8 @@ public class WebUI extends Module {
         server.createContext("/api/setStatus", new ToggleModuleHandler());
         server.createContext("/api/setModuleSettingValue", new SetSettingHandler());
         server.createContext("/api/getModuleSetting", new SettingsHandler());
+        server.createContext("/api/presets", new PresetsHandler());
+        server.createContext("/api/applyPreset", new ApplyPresetHandler());
         server.createContext("/", new StaticFileHandler("/webui", "/"));
         server.start();
         return server;

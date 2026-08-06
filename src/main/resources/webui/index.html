@@ -411,6 +411,128 @@ select:focus {
   box-shadow: 0 0 0 3px rgba(124, 106, 247, .15)
 }
 
+#preset-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: end;
+  padding: 16px;
+  margin-bottom: 20px;
+  background: rgba(14, 14, 24, .82);
+  border: 1px solid var(--border);
+  border-radius: 8px
+}
+
+.preset-copy {
+  min-width: 0
+}
+
+.preset-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px
+}
+
+.preset-heading h2 {
+  margin: 0;
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 700
+}
+
+#preset-risk {
+  padding: 3px 7px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 700
+}
+
+#preset-risk[data-level=SAFE] {
+  color: var(--success);
+  border-color: rgba(52, 211, 153, .28);
+  background: rgba(52, 211, 153, .08)
+}
+
+#preset-risk[data-level=NORMAL] {
+  color: #fbbf24;
+  border-color: rgba(251, 191, 36, .28);
+  background: rgba(251, 191, 36, .08)
+}
+
+#preset-risk[data-level=MAX] {
+  color: var(--danger);
+  border-color: rgba(248, 113, 113, .28);
+  background: rgba(248, 113, 113, .08)
+}
+
+.preset-fields {
+  display: grid;
+  grid-template-columns: minmax(170px, 1fr) minmax(140px, .7fr);
+  gap: 10px
+}
+
+.preset-field label {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--muted);
+  font-size: 9px
+}
+
+#preset-description {
+  min-height: 30px;
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.5
+}
+
+#apply-preset {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-width: 108px;
+  height: 34px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity .2s, transform .2s
+}
+
+#apply-preset:hover {
+  transform: translateY(-1px)
+}
+
+#apply-preset:disabled {
+  cursor: wait;
+  opacity: .55;
+  transform: none
+}
+
+@media (max-width: 640px) {
+  #preset-panel {
+    grid-template-columns: 1fr;
+    align-items: stretch
+  }
+
+  .preset-fields {
+    grid-template-columns: 1fr
+  }
+
+  #apply-preset {
+    width: 100%
+  }
+}
+
 #modal-backdrop {
   display: none;
   position: fixed;
@@ -611,6 +733,22 @@ select:focus {
     <div style="padding:12px 16px;border-top:1px solid var(--border);flex-shrink:0"><span style="font-size:9px;color:var(--muted);letter-spacing:.1em">ZEN v3.0 · 网页面板</span></div>
   </nav>
   <main style="padding:68px 20px 40px;max-width:1200px;margin:0 auto;position:relative;z-index:1">
+    <section id="preset-panel">
+      <div class="preset-copy">
+        <div class="preset-heading">
+          <h2>玩法预设</h2><span id="preset-risk" data-level="SAFE">SAFE</span>
+        </div>
+        <div class="preset-fields">
+          <div class="preset-field"><label for="preset-game">玩法</label><select id="preset-game" onchange="onPresetGameChange()"></select></div>
+          <div class="preset-field"><label for="preset-level">强度</label><select id="preset-level" onchange="updatePresetDetails()"></select></div>
+        </div>
+        <p id="preset-description">正在读取预设...</p>
+      </div>
+      <button id="apply-preset" type="button" onclick="applyPreset()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        <span>应用预设</span>
+      </button>
+    </section>
     <div id="cat-header" style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
       <div style="width:2px;height:20px;background:linear-gradient(180deg,var(--accent),var(--accent2));border-radius:2px;flex-shrink:0"></div>
       <h2 id="cat-title" style="font-family:Syne,sans-serif;font-weight:700;font-size:16px;color:#fff;margin:0;letter-spacing:.03em"></h2><span id="module-count"></span>
@@ -720,6 +858,80 @@ function setConnected(t) {
 }
 let category = "Combat", allCategories = [];
 const categoryNames = {Combat:"战斗", Movement:"移动", Player:"玩家", Render:"渲染", World:"世界", Misc:"杂项", Ghost:"辅助"};
+let presetGames = [];
+function selectedPresetGame() {
+  return presetGames.find(game => game.id === document.getElementById("preset-game").value);
+}
+function populatePresetLevels(selectedLevel) {
+  const game = selectedPresetGame(), levelSelect = document.getElementById("preset-level");
+  levelSelect.innerHTML = "";
+  if (!game) return;
+  game.levels.forEach(level => {
+    const option = document.createElement("option");
+    option.value = level.id;
+    option.textContent = level.name + " (" + level.id + ")";
+    option.selected = level.id === selectedLevel;
+    levelSelect.appendChild(option);
+  });
+  updatePresetDetails();
+}
+function onPresetGameChange() {
+  populatePresetLevels("SAFE");
+}
+function updatePresetDetails() {
+  const game = selectedPresetGame(), levelId = document.getElementById("preset-level").value;
+  const level = game && game.levels.find(item => item.id === levelId);
+  const risk = document.getElementById("preset-risk");
+  risk.textContent = level ? level.id : "--";
+  risk.dataset.level = level ? level.id : "";
+  document.getElementById("preset-description").textContent = level ? level.description : "没有可用预设。";
+}
+function loadPresets() {
+  $.ajax({
+    url: "/api/presets",
+    type: "GET",
+    dataType: "json",
+    success: response => {
+      if (!response.success) return void toast(response.reason, true);
+      presetGames = response.result.games || [];
+      const gameSelect = document.getElementById("preset-game");
+      gameSelect.innerHTML = "";
+      presetGames.forEach(game => {
+        const option = document.createElement("option");
+        option.value = game.id;
+        option.textContent = game.name;
+        option.selected = game.id === response.result.currentGame;
+        gameSelect.appendChild(option);
+      });
+      populatePresetLevels(response.result.currentLevel || "SAFE");
+    },
+    error: () => {
+      document.getElementById("preset-description").textContent = "无法读取预设。";
+      toast("预设加载失败。", true);
+    }
+  });
+}
+function applyPreset() {
+  const game = selectedPresetGame(), levelId = document.getElementById("preset-level").value;
+  if (!game || !levelId) return;
+  const level = game.levels.find(item => item.id === levelId);
+  const button = document.getElementById("apply-preset");
+  button.disabled = true;
+  button.querySelector("span").textContent = "正在应用";
+  $.ajax({
+    url: "/api/applyPreset?game=" + encodeURIComponent(game.id) + "&level=" + encodeURIComponent(levelId),
+    type: "GET",
+    dataType: "json",
+    success: response => {
+      response.success ? (toast("已应用“" + game.name + " / " + level.name + "”预设。"), loadCategory(false)) : toast(response.reason, true);
+    },
+    error: () => toast("应用预设失败。", true),
+    complete: () => {
+      button.disabled = false;
+      button.querySelector("span").textContent = "应用预设";
+    }
+  });
+}
 function categoryDisplayName(name) {
   return categoryNames[name] || name;
 }
@@ -892,6 +1104,7 @@ $.ajax({
     t.result.includes(category) || (location.hash = "#" + (category = t.result[0]));
     window.onhashchange = () => loadCategory(false);
     loadCategory(false);
+    loadPresets();
     setInterval(() => loadCategory(true), 5e3);
   },
   error: () => {

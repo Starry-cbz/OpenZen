@@ -25,3 +25,7 @@
 - WebUI API 同时返回原始字段和中文显示字段；读取与提交参数继续使用原始英文名称和值。
 - Java 界面中文字体使用 PingFang，原生加载器使用 Microsoft YaHei UI。
 - 项目要求 JDK 17，但本机 JDK 17 工具链下载失败；本机 JDK 21 可进入 `compileJava`，本次按要求中止本地完整编译，后续由 GitHub Actions 构建验证。
+- WebUI 新增玩法预设：`bedwars_xp`（起床战争经验模式）和 `skywars`（空岛战争），每种提供 `SAFE`、`NORMAL`、`MAX` 三档。
+- 预设由 `PresetManager` 统一维护，应用前校验模块、设置类型、数值范围和模式值；应用时保留渲染模块与 WebUI，重置其他玩法模块后启用预设配置，并写回现有配置文件。
+- WebUI 预设接口为 `/api/presets` 和 `/api/applyPreset?game=<id>&level=<level>`；档位文案明确提示任何档位都无法保证不受服务器处罚。
+- 预设功能当前尚未提交；WebUI JavaScript 语法和 `git diff --check` 已通过，完整构建仍交由 GitHub Actions。
