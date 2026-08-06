@@ -11,6 +11,7 @@ import shit.zen.hud.ModuleListHud;
 import shit.zen.modules.Category;
 import shit.zen.modules.KeyBind;
 import shit.zen.settings.Setting;
+import shit.zen.utils.misc.UiText;
 
 public abstract class Module
 extends ClientBase {
@@ -46,6 +47,10 @@ extends ClientBase {
     public void setKey(int keyCode) {
         this.keyCode = keyCode;
         this.bind.setKey(keyCode);
+    }
+
+    public String getDisplayName() {
+        return UiText.translate(this.name);
     }
 
     public void addSetting(Setting<?> setting) {

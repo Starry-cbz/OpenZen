@@ -10,7 +10,7 @@ int main(int argc, char** argv) {
 
     QApplication app(argc, argv);
     QApplication::setStyle(QStyleFactory::create(QStringLiteral("Fusion")));
-    QApplication::setApplicationName(QStringLiteral("OpenZen Loader"));
+    QApplication::setApplicationName(QStringLiteral("OpenZen 加载器"));
     QApplication::setOrganizationName(QStringLiteral("OpenZen"));
 
     // Main window is constructed up front but kept hidden until the splash

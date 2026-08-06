@@ -39,6 +39,7 @@ public class ModulesHandler extends AbstractHttpHandler {
                 continue;
             }
             Map<String, Object> entry = new HashMap<>();
+            entry.put("displayName", module.getDisplayName());
             entry.put("desc", "");
             entry.put("state", module.isEnabled());
             entry.put("settings", !module.getSettings().isEmpty());

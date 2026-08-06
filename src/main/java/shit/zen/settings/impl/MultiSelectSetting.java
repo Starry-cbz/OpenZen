@@ -10,6 +10,7 @@ import java.util.List;
 import lombok.Getter;
 import shit.zen.settings.Setting;
 import shit.zen.settings.SettingVisibility;
+import shit.zen.utils.misc.UiText;
 
 public class MultiSelectSetting
 extends Setting<List<String>> {
@@ -29,6 +30,14 @@ extends Setting<List<String>> {
 
     public boolean isSelected(String string) {
         return this.getValue().contains(string);
+    }
+
+    public String getDisplayOption(String option) {
+        return UiText.translate(option);
+    }
+
+    public List<String> getDisplayValue() {
+        return UiText.translateAll(this.getValue());
     }
 
     public MultiSelectSetting withVisibility(SettingVisibility settingVisibility) {

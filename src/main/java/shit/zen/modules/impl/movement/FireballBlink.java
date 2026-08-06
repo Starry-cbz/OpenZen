@@ -126,7 +126,7 @@ public class FireballBlink extends Module {
     private int ensureFireChargeSlot() {
         int slot = this.getFireChargeSlot();
         if (slot == -1) {
-            ChatUtil.print("No fire charge found");
+            ChatUtil.print("找不到火焰弹");
             this.setEnabled(false);
         }
         return slot;
@@ -187,7 +187,7 @@ public class FireballBlink extends Module {
                     this.fireChargeSlot = mc.player.getInventory().selected;
                     mc.player.getInventory().selected = slot;
                     this.fireballPrepareTick = 1;
-                    ChatUtil.print("Queued fireball " + (this.queuedFireballs + 1));
+                    ChatUtil.print("火球已加入队列：" + (this.queuedFireballs + 1));
                 }
             }
         } else if (!middleDown) {
@@ -197,19 +197,19 @@ public class FireballBlink extends Module {
         if (mouse4Down && !this.isSprinting) {
             this.isSprinting = true;
             if (this.isBlinking && this.pendingReleases < this.impulseCount) {
-                ChatUtil.print("Release " + (this.pendingReleases + 1) + "/" + this.impulseCount);
+                ChatUtil.print("释放冲量 " + (this.pendingReleases + 1) + "/" + this.impulseCount);
                 this.releaseImpulse(this.pendingReleases);
                 this.pendingReleases++;
                 if (this.pendingReleases >= this.impulseCount) {
-                    ChatUtil.print("Blink finished");
+                    ChatUtil.print("延迟移动已完成");
                     this.isBlinking = false;
                     this.setEnabled(false);
                 }
             } else if (!this.isBlinking) {
-                ChatUtil.print("No blink to release");
+                ChatUtil.print("没有可释放的延迟移动");
                 this.setEnabled(false);
             } else {
-                ChatUtil.print("All impulses released");
+                ChatUtil.print("所有冲量均已释放");
             }
         } else if (!mouse4Down) {
             this.isSprinting = false;
@@ -227,11 +227,11 @@ public class FireballBlink extends Module {
         if (this.isBlinking) {
             int qSize = this.packetQueue.size();
             long elapsed = System.currentTimeMillis() - this.blinkStartTime;
-            status = String.format("Blinking: %d packets, %.1fs, %d/%d", qSize, elapsed / 1000.0f, this.pendingReleases, this.impulseCount);
+            status = String.format("延迟移动中：%d 个数据包，%.1f 秒，%d/%d", qSize, elapsed / 1000.0f, this.pendingReleases, this.impulseCount);
         } else if (this.isThrowingFireball) {
-            status = "Throwing fireball x" + this.queuedFireballs;
+            status = "正在投掷火球 x" + this.queuedFireballs;
         } else {
-            status = "FireballBlink ready";
+            status = "火球延迟已就绪";
         }
         float textX = width / 2.0f - mc.font.width(status) / 2.0f;
         float textY = height / 2.0f + 20.0f;
@@ -273,7 +273,7 @@ public class FireballBlink extends Module {
                     && motion.getId() == mc.player.getId()) {
                 ++this.impulseCount;
                 this.impulsePacketBoundaries.add(this.packetQueue.size());
-                mc.execute(() -> ChatUtil.print("Impulse " + this.impulseCount + " queued"));
+                mc.execute(() -> ChatUtil.print("冲量 " + this.impulseCount + " 已加入队列"));
             }
             packetEvent.setCancelled(true);
             this.packetQueue.add(packet);
@@ -287,12 +287,12 @@ public class FireballBlink extends Module {
                 && !this.isBlinking) {
             ++this.impulseCount;
             this.impulsePacketBoundaries.add(this.packetQueue.size());
-            mc.execute(() -> ChatUtil.print("Fireball impulse " + this.impulseCount));
+            mc.execute(() -> ChatUtil.print("火球冲量 " + this.impulseCount));
             packetEvent.setCancelled(true);
             this.packetQueue.add(packetEvent.getPacket());
             this.isBlinking = true;
             this.blinkStartTime = System.currentTimeMillis();
-            mc.execute(() -> ChatUtil.print("Blink started"));
+            mc.execute(() -> ChatUtil.print("延迟移动已开始"));
         }
     }
 
@@ -305,7 +305,7 @@ public class FireballBlink extends Module {
             if (this.fireballPrepareTick > 0) {
                 if (this.fireballPrepareTick == 1) {
                     this.queuedFireballs++;
-                    ChatUtil.print("Preparing fireball #" + this.queuedFireballs);
+                    ChatUtil.print("正在准备第 " + this.queuedFireballs + " 个火球");
                     mc.options.keyJump.setDown(true);
                     float yaw;
                     float pitch;
@@ -326,7 +326,7 @@ public class FireballBlink extends Module {
                         this.fireballTick = this.countFireCharges();
                         mc.options.keyUse.setDown(true);
                         this.isThrowingFireball = true;
-                        ChatUtil.print("Throwing fireball " + this.queuedFireballs + " (charges=" + this.fireballTick + ")");
+                        ChatUtil.print("正在投掷第 " + this.queuedFireballs + " 个火球（剩余火焰弹=" + this.fireballTick + "）");
                     } else {
                         this.setEnabled(false);
                     }
@@ -342,13 +342,13 @@ public class FireballBlink extends Module {
                 mc.options.keyJump.setDown(false);
                 rotation = null;
                 this.isThrowingFireball = false;
-                ChatUtil.print("Used fireball " + this.queuedFireballs + " (had " + this.fireballTick + ", now " + current + ")");
+                ChatUtil.print("已使用第 " + this.queuedFireballs + " 个火球（原有 " + this.fireballTick + "，现有 " + current + "）");
             } else if (this.getFireChargeSlot() == -1) {
                 mc.options.keyUse.setDown(false);
                 mc.options.keyJump.setDown(false);
                 rotation = null;
                 this.isThrowingFireball = false;
-                ChatUtil.print("Out of fire charges");
+                ChatUtil.print("火焰弹已用尽");
             }
         }
     }

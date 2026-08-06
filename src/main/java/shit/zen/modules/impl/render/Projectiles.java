@@ -205,7 +205,7 @@ public class Projectiles extends Module {
                 Vec3 vel = entry.getVelocity();
                 Vector2f screenPos = ProjectionUtil.project(vel.x, vel.y, vel.z);
                 if (screenPos == null) return;
-                String text = String.format("Thrown by: %s%nLands in: %.1fs%nDistance: %.1fm",
+                String text = String.format("投掷者：%s%n落地时间：%.1f 秒%n距离：%.1f 米",
                         entry.getName(), entry.getX(), entry.getZ());
                 float maxW = 0.0f;
                 for (String line : text.split("\n")) {
@@ -239,7 +239,7 @@ public class Projectiles extends Module {
         drawContext.save();
         drawContext.translate(pos.x, pos.y);
         drawContext.scale(scale, scale);
-        String text = String.format("Thrown by: %s%nLands in: %.1fs%nDistance: %.1fm",
+        String text = String.format("投掷者：%s%n落地时间：%.1f 秒%n距离：%.1f 米",
                 entry.getName(), entry.getX(), entry.getZ());
         String[] lines = text.split("\n");
         float maxW = 0.0f;

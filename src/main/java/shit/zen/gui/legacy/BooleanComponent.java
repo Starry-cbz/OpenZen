@@ -32,7 +32,7 @@ extends SettingComponent {
         int panelX = this.parentButton.panel.x;
         int panelWidth = this.parentButton.panel.width;
         int textPadding = 8;
-        String name = this.booleanSetting.getName();
+        String name = this.booleanSetting.getDisplayName();
         float textY = (float)(rowY + verticalPadding) + ((float)contentHeight - FontStore.OPENSANS_16.getFontHeight()) / 2.0f;
         int textColor = new Color(255, 255, 255, (int)(255.0f * alpha)).getRGB();
         FontStore.OPENSANS_16.drawStringWithShadow(poseStack, name, panelX + textPadding, textY, textColor);

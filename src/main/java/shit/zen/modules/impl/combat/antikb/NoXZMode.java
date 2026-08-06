@@ -133,7 +133,7 @@ extends AntiKBMode {
                 this.release();
             }
             this.resetSuspension();
-            ChatUtil.print("Flag Detected");
+            ChatUtil.print("检测到回弹修正");
             this.flagCooldown = 2;
         }
         if (this.flagCooldown != 0) {
@@ -175,7 +175,7 @@ extends AntiKBMode {
                     this.suspendTicks = 0;
                     this.knockbackPacket = motionPacket;
                     receivePacketEvent.setCancelled(true);
-                    ChatUtil.print("Alink Wait");
+                    ChatUtil.print("等待 Alink");
                 }
             }
         }
@@ -329,7 +329,7 @@ extends AntiKBMode {
             boolean onGround = mc.player.onGround();
             boolean isTimeout = this.suspendTicks >= 12;
             if (onGround || isTimeout) {
-                ChatUtil.print(isTimeout ? "Alink Timeout" : "ground");
+                ChatUtil.print(isTimeout ? "Alink 超时" : "已落地");
                 if (instantAttackEnabled) {
                     ZenClient.serverTickRate = 1.0f;
                 }
@@ -376,7 +376,7 @@ extends AntiKBMode {
                 this.instantAttackProgress = 0.0f;
                 this.isInstantAttacking = false;
                 ZenClient.serverTickRate = 1.0f;
-                ChatUtil.print("done");
+                ChatUtil.print("完成");
             }
         }
         if (this.attacksRemaining > 0 && this.attackTarget != null) {
@@ -417,7 +417,7 @@ extends AntiKBMode {
         if (this.attacksRemaining <= 0) {
             this.clearTarget();
             if (AntiKB.INSTANCE.instantAttack.getValue()) {
-                ChatUtil.print("Attack (" + AntiKB.INSTANCE.attackAmount.getValue().intValue() + ")");
+                ChatUtil.print("攻击（" + AntiKB.INSTANCE.attackAmount.getValue().intValue() + "）");
             }
         }
     }
@@ -427,7 +427,7 @@ extends AntiKBMode {
             return false;
         }
         if (AntiKB.INSTANCE.sprintStateCheck.getValue() && !mc.player.isSprinting()) {
-            ChatUtil.print("not sprinting");
+            ChatUtil.print("未在疾跑");
             return false;
         }
         boolean wasSprinting = mc.player.isSprinting();
@@ -441,7 +441,7 @@ extends AntiKBMode {
             mc.player.setDeltaMovement(velocity.x * 0.6, velocity.y, velocity.z * 0.6);
         }
         if (!AntiKB.INSTANCE.instantAttack.getValue()) {
-            ChatUtil.print("Attack (" + this.attacksRemaining + ")");
+            ChatUtil.print("攻击（" + this.attacksRemaining + "）");
         }
         return true;
     }

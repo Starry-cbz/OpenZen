@@ -20,12 +20,12 @@ extends Command {
                 Module module = ZenClient.getInstance().getModuleManager().getModule(string);
                 if (module != null) {
                     module.setEnabled(!module.isEnabled());
-                    ChatUtil.print("Toggled " + module.getName() + ".");
+                    ChatUtil.print(module.getDisplayName() + (module.isEnabled() ? " 已启用。" : " 已禁用。"));
                 } else {
-                    ChatUtil.print("Invalid module.");
+                    ChatUtil.print("模块无效。");
                 }
             } catch (ModuleNotFoundException moduleNotFoundException) {
-                ChatUtil.print("Invalid module.");
+                ChatUtil.print("模块无效。");
             }
         }
     }

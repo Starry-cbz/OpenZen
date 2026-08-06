@@ -379,7 +379,7 @@ extends Screen {
                 FontRenderer queryFont = FontPresets.axiformaRegular(16.0f * this.currentScale);
                 if (!this.searchActive && this.searchQuery.isEmpty()) {
                     FontRenderer placeholderFont = FontPresets.axiformaBold(14.0f * this.currentScale);
-                    String placeholder = "search";
+                    String placeholder = "搜索";
                     float placeholderWidth = GlHelper.getStringWidth(placeholder, placeholderFont);
                     float placeholderX = searchX + (searchWidth - placeholderWidth) / 2.0f;
                     // 已修复：添加 this.currentScale 乘数

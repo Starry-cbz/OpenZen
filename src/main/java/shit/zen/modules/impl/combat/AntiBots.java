@@ -72,10 +72,10 @@ extends Module {
                     for (ClientboundPlayerInfoUpdatePacket.Entry entry : clientboundPlayerInfoUpdatePacket.entries()) {
                         if (entry.displayName() != null) {
                             if (entry.profile() != null && entry.profile().getName().contains("Sky_Yuanxiao") && this.debug.getValue()) {
-                                ChatUtil.print("汤圆来了11");
+                                ChatUtil.print("调试：检测到目标资料 Sky_Yuanxiao");
                             }
                             if (entry.displayName().getString().contains("Sky_Yuanxiao") && this.debug.getValue()) {
-                                ChatUtil.print("汤圆来了11");
+                                ChatUtil.print("调试：检测到目标显示名 Sky_Yuanxiao");
                             }
                         }
                         GameProfile gameProfile = entry.profile();
@@ -109,7 +109,7 @@ extends Module {
             for (Map.Entry<UUID, Long> entry : suspectJoinTimes.entrySet()) {
                 if (System.currentTimeMillis() - entry.getValue() <= 500L) continue;
                 if (this.debug.getValue()) {
-                    ChatUtil.print("Fake Staff Detected! (" + suspectNames.get(entry.getKey()) + ")");
+                    ChatUtil.print("检测到疑似假管理员！（" + suspectNames.get(entry.getKey()) + "）");
                 }
                 suspectJoinTimes.remove(entry.getKey());
             }
@@ -129,10 +129,10 @@ extends Module {
             for (ClientboundPlayerInfoUpdatePacket.Entry entry : infoUpdate.entries()) {
                 if (entry.displayName() != null) {
                     if (entry.profile() != null && entry.profile().getName().contains("Sky_Yuanxiao") && this.debug.getValue()) {
-                        ChatUtil.print("汤圆来了1");
+                        ChatUtil.print("调试：检测到目标资料 Sky_Yuanxiao");
                     }
                     if (entry.displayName().getString().contains("Sky_Yuanxiao") && this.debug.getValue()) {
-                        ChatUtil.print("汤圆来了1");
+                        ChatUtil.print("调试：检测到目标显示名 Sky_Yuanxiao");
                     }
                 }
                 if (entry.displayName() == null
@@ -152,7 +152,7 @@ extends Module {
             }
             String botName = suspectNames.get(addPlayer.getPlayerId());
             if (this.debug.getValue()) {
-                ChatUtil.print("Bot Detected! (" + botName + ")");
+                ChatUtil.print("检测到机器人！（" + botName + "）");
             }
             confirmedBotNames.put(addPlayer.getEntityId(), botName);
             suspectJoinTimes.remove(addPlayer.getPlayerId());
@@ -164,7 +164,7 @@ extends Module {
                 if (!confirmedBotIds.contains(entityId)) continue;
                 String name = confirmedBotNames.get(entityId);
                 if (this.debug.getValue()) {
-                    ChatUtil.print("Bot Removed! (" + name + ")");
+                    ChatUtil.print("机器人已移除！（" + name + "）");
                 }
                 confirmedBotIds.remove(entityId);
             }

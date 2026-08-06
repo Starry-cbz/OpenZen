@@ -93,7 +93,7 @@ extends ClientBase {
     }
 
     private String getUserId() {
-        return ZenClient.username != null && !ZenClient.username.isEmpty() ? ZenClient.username : "Unknown";
+        return ZenClient.username != null && !ZenClient.username.isEmpty() ? ZenClient.username : "未知用户";
     }
 
     private String getUserRole() {
@@ -108,7 +108,7 @@ extends ClientBase {
         } catch (Exception exception) {
             // empty catch block
         }
-        return "User";
+        return "用户";
     }
 
     public boolean isMouseOverAvatar(int originX, int originY, int mouseX, int mouseY, float scale) {

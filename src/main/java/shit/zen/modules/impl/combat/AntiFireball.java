@@ -32,7 +32,7 @@ extends Module {
             return;
         }
         Fireball fireball = optional.get();
-        ChatUtil.print("§c[AntiFireball] Attacking fireball...");
+        ChatUtil.print("§c[反火球] 正在攻击火球...");
         mc.gameMode.attack(mc.player, fireball);
         mc.player.swing(InteractionHand.MAIN_HAND);
     }

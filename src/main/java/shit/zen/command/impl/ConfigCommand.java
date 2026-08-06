@@ -17,7 +17,7 @@ public class ConfigCommand extends Command {
             switch (stringArray[0]) {
                 case "reload":
                     ZenClient.getInstance().getConfigManager().loadAll();
-                    ChatUtil.print("Config reloaded!");
+                    ChatUtil.print("配置已重新加载！");
                     break;
                 case "folder":
                     try {
@@ -27,7 +27,7 @@ public class ConfigCommand extends Command {
                     break;
             }
         } else {
-            ChatUtil.print("Usage: config reload/folder");
+            ChatUtil.print("用法：config reload/folder");
         }
     }
 

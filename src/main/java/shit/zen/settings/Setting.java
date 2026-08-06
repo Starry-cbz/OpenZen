@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.Generated;
 import shit.zen.settings.SettingVisibility;
+import shit.zen.utils.misc.UiText;
 
 public abstract class Setting<T> {
     @Getter @Setter
@@ -26,6 +27,10 @@ public abstract class Setting<T> {
     }
 
     public void onChanged(T t, T t2) {
+    }
+
+    public String getDisplayName() {
+        return UiText.translate(this.name);
     }
 
     public void setValue(T t) {

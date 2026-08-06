@@ -344,7 +344,7 @@ public class Scaffold extends Module {
         int blockCount = this.getBlockSlot();
         if (blockCount == 0) return;
         String countText = String.valueOf(blockCount);
-        String suffix = " Blocks";
+        String suffix = " 个方块";
         GuiGraphics graphics = event.guiGraphics();
         int width = mc.getWindow().getGuiScaledWidth();
         int height = mc.getWindow().getGuiScaledHeight();

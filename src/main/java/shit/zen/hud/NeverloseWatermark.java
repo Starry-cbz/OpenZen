@@ -117,11 +117,11 @@ public class NeverloseWatermark {
     }
 
     private String getServerName() {
-        return ClientBase.mc.player != null ? ClientBase.mc.player.getGameProfile().getName() : "Player";
+        return ClientBase.mc.player != null ? ClientBase.mc.player.getGameProfile().getName() : "玩家";
     }
 
     private String getPingText() {
-        return "Default Config";
+        return "默认配置";
     }
 
     private String getFpsText() {
@@ -141,7 +141,7 @@ public class NeverloseWatermark {
 
     private String getCpsText() {
         ServerData serverData = ClientBase.mc.getCurrentServer();
-        return serverData != null ? serverData.ip : "Singleplayer";
+        return serverData != null ? serverData.ip : "单人游戏";
     }
 
     private String getCoordText() {

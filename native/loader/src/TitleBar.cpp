@@ -71,7 +71,7 @@ TitleBar::TitleBar(QWidget* parent)
     dotSpacer->setFixedSize(16, 16);
     layout->addWidget(dotSpacer);
 
-    titleLabel_ = new QLabel(QStringLiteral("OpenZen Loader"), this);
+    titleLabel_ = new QLabel(QStringLiteral("OpenZen 加载器"), this);
     titleLabel_->setStyleSheet(QStringLiteral(
         "color: #e7ecf5; font-weight: 600; font-size: 12px;"
         "font-family: 'Segoe UI', 'Microsoft YaHei UI', sans-serif;"));
@@ -83,7 +83,7 @@ TitleBar::TitleBar(QWidget* parent)
     minBtn_->setText(QStringLiteral("–"));   // en-dash for minimize
     minBtn_->setCursor(Qt::PointingHandCursor);
     minBtn_->setStyleSheet(QString::fromUtf8(kCommonBtnQss));
-    minBtn_->setToolTip(QStringLiteral("Minimize"));
+    minBtn_->setToolTip(QStringLiteral("最小化"));
     connect(minBtn_, &QToolButton::clicked, this, [this] {
         if (auto* w = window()) w->showMinimized();
     });
@@ -93,7 +93,7 @@ TitleBar::TitleBar(QWidget* parent)
     closeBtn_->setText(QStringLiteral("✕")); // multiplication sign
     closeBtn_->setCursor(Qt::PointingHandCursor);
     closeBtn_->setStyleSheet(QString::fromUtf8(kCloseBtnQss));
-    closeBtn_->setToolTip(QStringLiteral("Close"));
+    closeBtn_->setToolTip(QStringLiteral("关闭"));
     connect(closeBtn_, &QToolButton::clicked, this, [this] {
         if (auto* w = window()) w->close();
     });

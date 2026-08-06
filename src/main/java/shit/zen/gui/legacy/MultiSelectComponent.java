@@ -46,7 +46,7 @@ extends SettingComponent {
         Color edgeColor = new Color(100, 100, 100, (int)(180.0f * alpha));
         RenderUtil.drawFilledRect(poseStack, panelX + outerPadding + 2, rowY + verticalPadding, innerPadding - 2, contentHeight, edgeColor.getRGB());
         RenderUtil.drawFilledRect(poseStack, panelX + panelWidth - outerPadding - innerPadding, rowY + verticalPadding, innerPadding - 2, contentHeight, edgeColor.getRGB());
-        String name = this.multiSelectSetting.getName();
+        String name = this.multiSelectSetting.getDisplayName();
         float nameWidth = FontStore.OPENSANS_16.getStringWidth(name);
         float nameX = (float)boxX + ((float)boxWidth - nameWidth) / 2.0f;
         float nameY = (float)(rowY + verticalPadding) + ((float)contentHeight - FontStore.OPENSANS_16.getFontHeight()) / 2.0f - 1.0f;
@@ -62,11 +62,12 @@ extends SettingComponent {
                 if (itemHovered) {
                     RenderUtil.drawFilledRect(poseStack, boxX, itemY, boxWidth, contentHeight, new Color(0, 0, 0, 100).getRGB());
                 }
-                float optionWidth = FontStore.OPENSANS_16.getStringWidth(option);
+                String displayOption = this.multiSelectSetting.getDisplayOption(option);
+                float optionWidth = FontStore.OPENSANS_16.getStringWidth(displayOption);
                 float optionX = (float)boxX + ((float)boxWidth - optionWidth) / 2.0f;
                 float optionY = itemY + ((float)contentHeight - FontStore.OPENSANS_16.getFontHeight()) / 2.0f;
                 boolean isSelected = this.multiSelectSetting.isSelected(option);
-                FontStore.OPENSANS_16.drawStringWithShadow(poseStack, option, optionX, optionY, isSelected ? selectedColor : textColor);
+                FontStore.OPENSANS_16.drawStringWithShadow(poseStack, displayOption, optionX, optionY, isSelected ? selectedColor : textColor);
             }
         }
     }

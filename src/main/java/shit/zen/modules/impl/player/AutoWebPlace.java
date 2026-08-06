@@ -1325,7 +1325,7 @@ public class AutoWebPlace extends Module {
 
     private void debugLog(String message) {
         if (this.debugSetting.getValue()) {
-            ChatUtil.print("[AutoWebPlace] " + message);
+            ChatUtil.print("[自动放置蛛网] " + message);
         }
     }
 

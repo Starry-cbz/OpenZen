@@ -33,8 +33,8 @@ extends ClientBase {
     private final Map<String, Boolean> dropdownOpen = new HashMap<>();
     private final Map<String, Float> dropdownAlpha = new HashMap<>();
     private final Map<String, Map<String, Float>> dropdownItemHover = new HashMap<>();
-    private static final String[] LANGUAGES = new String[]{"English", "Chinese"};
-    private String selectedLanguage = "English";
+    private static final String[] LANGUAGES = new String[]{"中文", "英文"};
+    private String selectedLanguage = "中文";
     private static final String[] SCALES = new String[]{"50%", "75%", "100%", "125%", "150%"};
     private String selectedScale = "100%";
     private static final Color POPUP_BG_COLOR = new Color(20, 20, 24, 230);
@@ -90,23 +90,23 @@ extends ClientBase {
         int rowHeight = (int)(18.0f * scale);
         int rowY = (int)((float)popupY + 65.0f * scale);
         int rightEdge = (int)((float)(popupX + popupWidth) - 15.0f * scale);
-        GlHelper.drawText("Username:", (float)popupX + 15.0f * scale, rowY, labelFont, labelColor);
+        GlHelper.drawText("用户名：", (float)popupX + 15.0f * scale, rowY, labelFont, labelColor);
         String userId = this.getUserId();
         float userIdWidth = GlHelper.getStringWidth(userId, valueFont);
         GlHelper.drawText(userId, (float)rightEdge - userIdWidth, rowY, valueFont, valueColor);
-        GlHelper.drawText("Branch:", (float)popupX + 15.0f * scale, rowY += rowHeight, labelFont, labelColor);
+        GlHelper.drawText("分支：", (float)popupX + 15.0f * scale, rowY += rowHeight, labelFont, labelColor);
         String userRole = this.getUserRole();
         float roleWidth = GlHelper.getStringWidth(userRole, valueFont);
         GlHelper.drawText(userRole, (float)rightEdge - roleWidth, rowY, valueFont, valueColor);
-        GlHelper.drawText("Updated:", (float)popupX + 15.0f * scale, rowY += rowHeight, labelFont, labelColor);
-        String updatedDate = "Aug 4 2025";
+        GlHelper.drawText("更新时间：", (float)popupX + 15.0f * scale, rowY += rowHeight, labelFont, labelColor);
+        String updatedDate = "2025 年 8 月 4 日";
         float dateWidth = GlHelper.getStringWidth(updatedDate, valueFont);
         GlHelper.drawText(updatedDate, (float)rightEdge - dateWidth, rowY, valueFont, valueColor);
         rowY += rowHeight;
         rowY = (int)((float)rowY + 8.0f * scale);
-        rowY += this.drawDropdown(drawContext, guiGraphics, "Language", this.selectedLanguage, LANGUAGES, "language", popupX, rowY, mouseX, mouseY, this.openAlpha, scale, popupWidth);
+        rowY += this.drawDropdown(drawContext, guiGraphics, "语言", this.selectedLanguage, LANGUAGES, "language", popupX, rowY, mouseX, mouseY, this.openAlpha, scale, popupWidth);
         rowY = (int)((float)rowY + 8.0f * scale);
-        this.drawDropdown(drawContext, guiGraphics, "Menu Scale", this.selectedScale, SCALES, "scale", popupX, rowY, mouseX, mouseY, this.openAlpha, scale, popupWidth);
+        this.drawDropdown(drawContext, guiGraphics, "界面缩放", this.selectedScale, SCALES, "scale", popupX, rowY, mouseX, mouseY, this.openAlpha, scale, popupWidth);
         FontRenderer footerFont = FontPresets.axiformaRegular(12.0f * scale);
         String footer = "7unknown \u00a9 2024-2025";
         float footerWidth = GlHelper.getStringWidth(footer, footerFont);
@@ -187,11 +187,11 @@ extends ClientBase {
     }
 
     private String getUserId() {
-        return ZenClient.username != null && !ZenClient.username.isEmpty() ? ZenClient.username : "Unknown";
+        return ZenClient.username != null && !ZenClient.username.isEmpty() ? ZenClient.username : "未知用户";
     }
 
     private String getUserRole() {
-        return "User";
+        return "用户";
     }
 
     public boolean onMouseClick(int mouseX, int mouseY, float scale) {

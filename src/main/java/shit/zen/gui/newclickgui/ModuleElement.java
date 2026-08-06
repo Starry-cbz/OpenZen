@@ -104,13 +104,13 @@ extends UIElement {
             RenderUtil.drawFilledRect(poseStack, this.posX + 0.5f, this.posY, 119.0f, 20.0f, ColorUtil.withAlpha(-1, 0.1f * alpha * hoverAmount));
         }
         if (1.0f - (enabledAmount = this.enabledTimer.getValueF()) > 0.0f) {
-            FontStore.AXIFORMA_REGULAR_16.drawStringCentered(poseStack, this.module.getName(), this.posX + 60.0f, this.posY + (20.0f - FontStore.AXIFORMA_REGULAR_16.getFontHeight()) / 2.0f, ColorUtil.withAlpha(-1, alpha * (1.0f - enabledAmount) * 0.6f));
+            FontStore.AXIFORMA_REGULAR_16.drawStringCentered(poseStack, this.module.getDisplayName(), this.posX + 60.0f, this.posY + (20.0f - FontStore.AXIFORMA_REGULAR_16.getFontHeight()) / 2.0f, ColorUtil.withAlpha(-1, alpha * (1.0f - enabledAmount) * 0.6f));
         }
         if (enabledAmount > 0.0f) {
-            titleWidth = FontStore.AXIFORMA_BOLD_16.getStringWidth(this.module.getName());
+            titleWidth = FontStore.AXIFORMA_BOLD_16.getStringWidth(this.module.getDisplayName());
             titleY = this.posY + (20.0f - FontStore.AXIFORMA_BOLD_16.getFontHeight()) / 2.0f;
             RenderUtil.drawShadow(poseStack, this.posX + (120.0f - titleWidth) / 2.0f, titleY + FontStore.AXIFORMA_BOLD_16.getFontHeight() / 4.0f, titleWidth, FontStore.AXIFORMA_BOLD_16.getFontHeight() / 2.0f, 12, ColorUtil.withAlpha(-13768502, alpha * enabledAmount * 0.36f));
-            FontStore.AXIFORMA_BOLD_16.drawStringCentered(poseStack, this.module.getName(), this.posX + 60.0f, titleY, ColorUtil.withAlpha(-13768502, alpha * enabledAmount));
+            FontStore.AXIFORMA_BOLD_16.drawStringCentered(poseStack, this.module.getDisplayName(), this.posX + 60.0f, titleY, ColorUtil.withAlpha(-13768502, alpha * enabledAmount));
         }
         if (!this.module.getSettings().isEmpty()) {
             String arrowIcon = String.valueOf('\ueb4e');

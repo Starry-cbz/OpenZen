@@ -39,7 +39,7 @@ extends Module {
                 ++count;
             }
         }
-        ChatUtil.print("N: " + count + ", Set: ");
+        ChatUtil.print("数量：" + count + "，集合：");
         ChatUtil.print("==========================");
         for (String className : suspiciousClasses) {
             ChatUtil.print(className);

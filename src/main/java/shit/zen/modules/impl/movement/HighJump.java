@@ -36,7 +36,7 @@ extends Module {
         this.skipPacket = 0;
         this.fallbackTicks = 0;
         if (ZenClient.isReady()) {
-            ChatUtil.print("你必须在Bedwars并且你的延迟必须在20ms以下才能使用这个模块");
+            ChatUtil.print("该模块只能在 Bedwars 中使用，且延迟必须低于 20ms。");
         }
     }
 

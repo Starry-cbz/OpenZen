@@ -104,10 +104,10 @@ MainWindow::MainWindow(QWidget* parent)
 
 void MainWindow::buildUi() {
 #ifdef OPENZEN_BUILD_REVISION
-    const QString displayTitle = QStringLiteral("OpenZen Loader  ·  build %1")
+    const QString displayTitle = QStringLiteral("OpenZen 加载器  ·  构建 %1")
             .arg(QString::fromLatin1(OPENZEN_BUILD_REVISION).left(7));
 #else
-    const QString displayTitle = QStringLiteral("OpenZen Loader");
+    const QString displayTitle = QStringLiteral("OpenZen 加载器");
 #endif
     // The OS-level window title (what GetWindowTextW and window scanners read) is
     // randomised on every launch so it can't be matched against a fixed string.
@@ -132,12 +132,12 @@ void MainWindow::buildUi() {
     layout->setContentsMargins(18, 14, 18, 14);
     layout->setSpacing(10);
 
-    auto* title = new QLabel(QStringLiteral("Minecraft Instances"), body);
+    auto* title = new QLabel(QStringLiteral("Minecraft 实例"), body);
     title->setObjectName("title");
 
     hint_ = new QLabel(
-        QStringLiteral("Click Inject on the instance you want to load OpenZen into. "
-                       "List refreshes every second."),
+        QStringLiteral("点击目标实例旁的“注入”以加载 OpenZen。"
+                       "列表每秒刷新一次。"),
         body);
     hint_->setObjectName("hint");
     hint_->setWordWrap(true);
@@ -146,7 +146,7 @@ void MainWindow::buildUi() {
     connect(list_, &InstanceList::injectRequested,
             this, &MainWindow::onInjectRequested);
 
-    status_ = new QLabel(QStringLiteral("Watching for Minecraft processes…"), body);
+    status_ = new QLabel(QStringLiteral("正在监测 Minecraft 进程…"), body);
     status_->setObjectName("status");
     status_->setWordWrap(true);
 
@@ -273,14 +273,14 @@ void MainWindow::refreshNow() {
         item.pid = jp.pid;
         item.title = fromW(jp.window_title);
         if (item.title.isEmpty()) {
-            item.title = QStringLiteral("(starting up — %1)")
+            item.title = QStringLiteral("（正在启动 - %1）")
                     .arg(fromW(jp.window_class));
         }
         filtered.push_back(std::move(item));
     }
 
     list_->setInstances(filtered);
-    status_->setText(QStringLiteral("Watching %1 Minecraft instance(s).")
+    status_->setText(QStringLiteral("正在监测 %1 个 Minecraft 实例。")
                      .arg(list_->count()));
 }
 

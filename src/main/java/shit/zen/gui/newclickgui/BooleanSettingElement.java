@@ -38,7 +38,7 @@ extends SettingElement<BooleanSetting> {
         if (Mth.equal(alpha *= this.visibilityTimer.getValueF(), 0.0f)) {
             return;
         }
-        String name = this.setting.getName();
+        String name = this.setting.getDisplayName();
         if (FontStore.AXIFORMA_REGULAR_14.getStringWidth(name) > 90.0f) {
             name = name.substring(0, 10);
             name = name + ELLIPSIS;
@@ -63,7 +63,7 @@ extends SettingElement<BooleanSetting> {
         poseStack.popPose();
         if (this.isHovered && this.isTruncated) {
             this.parentPanel.setHoveredSettingElement(this);
-            this.parentPanel.setTooltipText(this.setting.getName());
+            this.parentPanel.setTooltipText(this.setting.getDisplayName());
             this.parentPanel.setShowTooltip(true);
         } else if (this.parentPanel.getHoveredSettingElement() == this) {
             this.parentPanel.setShowTooltip(false);

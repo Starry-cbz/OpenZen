@@ -30,17 +30,17 @@ public class WebUI extends Module {
     public void onEnable() {
         try {
             this.httpServer = this.createHttpServer();
-            ChatUtil.print("WebUI started at http://127.0.0.1:8089");
+            ChatUtil.print("网页面板已启动：http://127.0.0.1:8089");
             try {
                 System.setProperty("java.awt.headless", "false");
                 if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
                     Desktop.getDesktop().browse(new URI("http://127.0.0.1:8089"));
                 }
             } catch (URISyntaxException | IOException ex) {
-                ChatUtil.print("Failed to open browser: " + ex.getMessage());
+                ChatUtil.print("打开浏览器失败：" + ex.getMessage());
             }
         } catch (IOException ioException) {
-            ChatUtil.print("Failed to start http server because " + ioException.getMessage());
+            ChatUtil.print("HTTP 服务器启动失败：" + ioException.getMessage());
             ioException.printStackTrace();
             this.setEnabled(false);
         }
@@ -51,7 +51,7 @@ public class WebUI extends Module {
         if (this.httpServer != null) {
             this.httpServer.stop(0);
             this.httpServer = null;
-            ChatUtil.print("WebUI stopped");
+            ChatUtil.print("网页面板已停止");
         }
     }
 

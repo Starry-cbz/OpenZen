@@ -10,6 +10,7 @@ import shit.zen.modules.Category;
 import shit.zen.modules.Module;
 import shit.zen.render.FontStore;
 import shit.zen.utils.render.RenderUtil;
+import shit.zen.utils.misc.UiText;
 
 public class CategoryPanel {
     public int x;
@@ -96,7 +97,7 @@ public class CategoryPanel {
         float iconY = (float)this.y + ((float)this.rowHeight / 2.0f - FontStore.ICON_30.getFontHeight() / 2.0f) + 3.0f;
         FontStore.ICON_30.drawStringWithShadow(guiGraphics.pose(), iconChar, this.x + 4, iconY, -1);
         float labelY = (float)this.y + ((float)this.rowHeight / 2.0f - FontStore.OPENSANS_18.getFontHeight() / 2.0f) - 0.5f;
-        FontStore.OPENSANS_18.drawStringWithShadow(guiGraphics.pose(), this.category.displayName, this.x + this.rowHeight + 4, labelY, -1);
+        FontStore.OPENSANS_18.drawStringWithShadow(guiGraphics.pose(), UiText.translate(this.category.displayName), this.x + this.rowHeight + 4, labelY, -1);
         for (ModuleButton moduleButton : this.moduleButtons) {
             moduleButton.render(guiGraphics.pose(), mouseX, mouseY, partialTicks);
         }

@@ -177,7 +177,7 @@ public class InventoryManager extends Module {
         if (!externalContainerOpen
                 && (packet instanceof ServerboundContainerClickPacket
                         || packet instanceof ServerboundContainerClosePacket)) {
-            ChatUtil.print("Cancelled Inventory Packet: " + packet.getClass().getName());
+            ChatUtil.print("已拦截背包数据包：" + packet.getClass().getName());
             event.setCancelled(true);
             Packet<ServerGamePacketListener> typed = (Packet<ServerGamePacketListener>) packet;
             this.pendingPackets.add(typed);
@@ -210,7 +210,7 @@ public class InventoryManager extends Module {
         }
         while (!this.pendingPackets.isEmpty()) {
             Packet<ServerGamePacketListener> packet = this.pendingPackets.poll();
-            ChatUtil.print("Releasing Packet: " + packet.getClass().getName());
+            ChatUtil.print("正在释放数据包：" + packet.getClass().getName());
             PacketUtil.sendQueued(packet);
         }
         PacketUtil.sendQueued(new ServerboundContainerClosePacket(mc.player.inventoryMenu.containerId));

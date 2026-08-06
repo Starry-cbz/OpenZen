@@ -30,7 +30,7 @@ implements SettingRenderer {
         }
         FontRenderer nameFont = FontPresets.axiformaRegular(14.0f * scale);
         float nameY = (float)y + 20.0f * scale / 2.0f - nameFont.getMetrics().capHeight() / 2.0f;
-        TextGlow.drawGlowText(multiSelectSetting.getName(), x, nameY, nameFont, this.applyAlpha(-1, alpha), this.applyAlpha(new Color(255, 255, 255, 120).getRGB(), alpha), 8.0f * scale);
+        TextGlow.drawGlowText(multiSelectSetting.getDisplayName(), x, nameY, nameFont, this.applyAlpha(-1, alpha), this.applyAlpha(new Color(255, 255, 255, 120).getRGB(), alpha), 8.0f * scale);
         int optionY = y + Math.round(20.0f * scale);
         int rowHeight = Math.round(20.0f * scale);
         int boxSize = Math.round(10.0f * scale);
@@ -60,9 +60,9 @@ implements SettingRenderer {
             float labelY = (float)optionY + (float)rowHeight / 2.0f - labelFont.getMetrics().capHeight() / 2.0f;
             if (selectedAmount > 0.01f) {
                 int glowColor = this.applyAlpha(COLOR_SELECTED_GLOW, alpha * selectedAmount);
-                TextGlow.drawGlowText(option, x + rightPadding, labelY, labelFont, this.applyAlpha(labelColor, alpha), glowColor, 8.0f * scale * selectedAmount);
+                TextGlow.drawGlowText(multiSelectSetting.getDisplayOption(option), x + rightPadding, labelY, labelFont, this.applyAlpha(labelColor, alpha), glowColor, 8.0f * scale * selectedAmount);
             } else {
-                GlHelper.drawText(option, x + rightPadding, labelY, labelFont, this.applyAlpha(labelColor, alpha));
+                GlHelper.drawText(multiSelectSetting.getDisplayOption(option), x + rightPadding, labelY, labelFont, this.applyAlpha(labelColor, alpha));
             }
             optionY += rowHeight;
         }
@@ -91,7 +91,7 @@ implements SettingRenderer {
                     multiSelectSetting.getValue().add(option);
                 }
                 boolean nowSelected = multiSelectSetting.isSelected(option);
-                PanelClickGui.panelClickGui.addToast(option + (nowSelected ? " enabled" : " disabled"));
+                PanelClickGui.panelClickGui.addToast(multiSelectSetting.getDisplayOption(option) + (nowSelected ? "已启用" : "已禁用"));
                 return true;
             }
             optionY += rowHeight;

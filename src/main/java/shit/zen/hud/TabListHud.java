@@ -22,7 +22,7 @@ public class TabListHud
 extends ClientBase
 implements IHudElement {
     private static final FontRenderer nameFont = FontPresets.pingfang(12.0f);
-    private static final FontRenderer headerFont = FontPresets.poppinsBold(20.0f);
+    private static final FontRenderer headerFont = FontPresets.pingfang(20.0f);
     private static final FontRenderer titleFont = FontPresets.pingfang(16.0f);
 
     @Override
@@ -102,7 +102,7 @@ implements IHudElement {
                 }
             } else {
                 headerHeight = 20.0f;
-                String title = "Player List (" + players.size() + ")";
+                String title = "玩家列表（" + players.size() + "）";
                 float titleX = x + (width - headerFont.getWidth(title)) / 2.0f;
                 GlHelper.drawTextShadowLegacy(title, titleX, y + 10.0f + headerFont.getMetrics().ascent() + 15.0f, headerFont, -1);
             }

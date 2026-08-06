@@ -22,7 +22,7 @@ extends HudElement {
     }
 
     private List<Module> getVisibleModules() {
-        return ZenClient.getInstance().getModuleManager().getModules().stream().filter(module -> !(module instanceof ModuleListHud) && !(module instanceof Interface)).filter(Module::isEnabled).filter(module -> !module.getName().isEmpty()).sorted((a, b) -> Mth.ceil(GlHelper.getStringWidth(b.getName(), FontPresets.pingfang(16.0f)) - GlHelper.getStringWidth(a.getName(), FontPresets.pingfang(16.0f)))).collect(Collectors.toList());
+        return ZenClient.getInstance().getModuleManager().getModules().stream().filter(module -> !(module instanceof ModuleListHud) && !(module instanceof Interface)).filter(Module::isEnabled).filter(module -> !module.getName().isEmpty()).sorted((a, b) -> Mth.ceil(GlHelper.getStringWidth(b.getDisplayName(), FontPresets.pingfang(16.0f)) - GlHelper.getStringWidth(a.getDisplayName(), FontPresets.pingfang(16.0f)))).collect(Collectors.toList());
     }
 
     @Override
@@ -44,7 +44,7 @@ extends HudElement {
         if (!visibleModules.isEmpty()) {
             float offsetY = 0.0f;
             for (Module module : visibleModules) {
-                GlHelper.drawTextShadowLegacy(module.getName(), 4.0f, 16.0f + offsetY, fontRenderer, ColorUtil.getRainbowColor(10, visibleModules.indexOf(module) * 8).getRGB());
+                GlHelper.drawTextShadowLegacy(module.getDisplayName(), 4.0f, 16.0f + offsetY, fontRenderer, ColorUtil.getRainbowColor(10, visibleModules.indexOf(module) * 8).getRGB());
                 Objects.requireNonNull(mc.font);
                 offsetY += (float)(9 + 2);
             }

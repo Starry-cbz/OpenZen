@@ -18,8 +18,8 @@ import shit.zen.utils.game.MovementUtil;
 public class ScaffoldHud
 extends ClientBase
 implements IHudElement {
-    private static final FontRenderer blockCountFont = FontPresets.poppinsBold(14.0f);
-    private static final FontRenderer speedFont = FontPresets.poppinsMedium(10.0f);
+    private static final FontRenderer blockCountFont = FontPresets.pingfang(14.0f);
+    private static final FontRenderer speedFont = FontPresets.pingfang(10.0f);
     private final SpringAnimation progressAnim = new SpringAnimation(250.0f, 1.0f, 22.0f, 0.0f);
     private long lastUpdateTime = 0L;
 
@@ -61,9 +61,9 @@ implements IHudElement {
         }
         float iconSize = height - 16.0f;
         int blockCount = blockItem.getCount();
-        String countText = blockCount + " blocks";
+        String countText = blockCount + " 个方块";
         double speedBps = MovementUtil.getSpeedBps();
-        String speedText = String.format("%.2fb/s", new Object[]{speedBps});
+        String speedText = String.format("%.2f 方块/秒", new Object[]{speedBps});
         float countWidth = blockCountFont.getWidth(countText);
         float speedWidth = speedFont.getWidth(speedText);
         float maxTextWidth = Math.max(countWidth, speedWidth);

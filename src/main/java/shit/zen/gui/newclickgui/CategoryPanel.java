@@ -24,6 +24,7 @@ import shit.zen.utils.misc.CursorUtil;
 import shit.zen.utils.render.ColorUtil;
 import shit.zen.utils.render.RenderHelper;
 import shit.zen.utils.render.RenderUtil;
+import shit.zen.utils.misc.UiText;
 
 public class CategoryPanel
 extends UIElement {
@@ -124,7 +125,7 @@ extends UIElement {
         StencilHelper.beginRead(true);
         RenderUtil.drawGradientH(poseStack, this.posX, this.posY, 120.0f, 1.0f, ColorUtil.withAlpha(ColorUtil.animateColorOffset(-13768502, ACCENT_COLOR_DARK, 100L), alpha), ColorUtil.withAlpha(ColorUtil.animateColorOffset(-13768502, ACCENT_COLOR_DARK, 2000L), alpha));
         StencilHelper.end();
-        FontStore.AXIFORMA_EXTRABOLD_18.drawString(poseStack, this.category.displayName, this.posX + 8.0f, this.posY + (20.0f - FontStore.AXIFORMA_EXTRABOLD_18.getFontHeight()) / 2.0f + 3.0f, ColorUtil.withAlpha(-1, alpha));
+        FontStore.AXIFORMA_EXTRABOLD_18.drawString(poseStack, UiText.translate(this.category.displayName), this.posX + 8.0f, this.posY + (20.0f - FontStore.AXIFORMA_EXTRABOLD_18.getFontHeight()) / 2.0f + 3.0f, ColorUtil.withAlpha(-1, alpha));
         float scrollOffset = this.scrollTimer.getValueF();
         float elementY = this.posY + 20.0f - scrollOffset;
         StencilHelper.beginWrite(false);

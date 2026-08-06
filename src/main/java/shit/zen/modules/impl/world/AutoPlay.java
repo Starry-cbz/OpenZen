@@ -54,13 +54,13 @@ extends Module {
         if (packetEvent.getPacket() instanceof ClientboundSystemChatPacket chatPacket) {
             String message = chatPacket.content().getString().replaceAll("§[0-9a-fk-or]", "").trim();
             if (message.contains("地图评分")) {
-                ChatUtil.print("1");
+                ChatUtil.print("检测到对局结束，正在准备下一局");
                 if (this.disconnectTime == -1L) {
                     this.disconnectTime = System.currentTimeMillis();
                     this.pendingDisconnect = true;
                 }
             } else if (message.contains("游戏将在 1 秒 后开始")) {
-                ChatUtil.print("2");
+                ChatUtil.print("检测到新对局即将开始");
                 this.disconnectTime = -1L;
                 this.pendingDisconnect = false;
             }

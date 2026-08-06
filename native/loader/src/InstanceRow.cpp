@@ -74,7 +74,7 @@ InstanceRow::InstanceRow(unsigned long pid, const QString& title, QWidget* paren
     titleLabel_->setTextInteractionFlags(Qt::NoTextInteraction);
     layout->addWidget(titleLabel_, 1);
 
-    injectBtn_ = new QPushButton(QStringLiteral("Inject"), this);
+    injectBtn_ = new QPushButton(QStringLiteral("注入"), this);
     injectBtn_->setCursor(Qt::PointingHandCursor);
     injectBtn_->setStyleSheet(QString::fromUtf8(kInjectBtnQss));
     injectBtn_->setFixedHeight(30);

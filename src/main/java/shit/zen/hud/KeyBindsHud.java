@@ -152,8 +152,8 @@ extends HudElement {
     }
 
     private final List<KeyBindsHud.KeyBindRow> rowList = new ArrayList<>();
-    private final FontRenderer nameFont = FontPresets.poppinsMedium(15.0f);
-    final FontRenderer keyFont = FontPresets.poppinsRegular(15.0f);
+    private final FontRenderer nameFont = FontPresets.pingfang(15.0f);
+    final FontRenderer keyFont = FontPresets.pingfang(15.0f);
     private final FontRenderer bindFont = FontPresets.materialIcons(18.0f);
     private final SmoothAnimationTimer scrollAnim = new SmoothAnimationTimer();
     private final SmoothAnimationTimer fadeAnim = new SmoothAnimationTimer();
@@ -185,7 +185,7 @@ extends HudElement {
             return;
         }
         this.maxWidth = GlHelper.getStringWidth("\uE1C6", this.bindFont);
-        this.totalHeight = GlHelper.getStringWidth("Hotkeys", this.nameFont);
+        this.totalHeight = GlHelper.getStringWidth("快捷键", this.nameFont);
         this.visibleHeight = GlHelper.getStringWidth("\uE9F6", this.bindFont);
         this.scrollOffset = GlHelper.getFontAscent(this.nameFont);
         this.alpha = GlHelper.getFontAscent(this.keyFont);
@@ -208,12 +208,12 @@ extends HudElement {
             if (module instanceof TripleProvider tp) {
                 Triple<String, String, Boolean> triple = (Triple<String, String, Boolean>) tp.getTriple();
                 if (triple != null) {
-                    entry = new KeyBindsHud.KeyBindEntry(triple.first(), triple.second(), triple.isEnabled(), module);
+                    entry = new KeyBindsHud.KeyBindEntry(shit.zen.utils.misc.UiText.translate(triple.first()), triple.second(), triple.isEnabled(), module);
                 }
             } else if (module.isEnabled() && module.getKey() > 0
                     && !module.getName().equals("Interface")
                     && !module.getName().equals("ClickGui")) {
-                entry = new KeyBindsHud.KeyBindEntry(module.getName(), null, true, module);
+                entry = new KeyBindsHud.KeyBindEntry(module.getDisplayName(), null, true, module);
             }
             if (entry == null) continue;
             this.rowMap.put(module, entry);
@@ -328,11 +328,11 @@ extends HudElement {
         if (rightAligned) {
             float iconX = x + width - 5.0f - this.maxWidth;
             float titleX = iconX - 3.0f - this.totalHeight;
-            GlHelper.drawTextWithShadow("Hotkeys", titleX, headerTextY, this.nameFont, this.disabledPaint);
+            GlHelper.drawTextWithShadow("快捷键", titleX, headerTextY, this.nameFont, this.disabledPaint);
             GlHelper.drawTextWithShadow("\uE1C6", iconX, headerTextY + 1.0f, this.bindFont, this.disabledPaint);
         } else {
             GlHelper.drawTextWithShadow("\uE1C6", x + 5.0f, headerTextY + 1.0f, this.bindFont, this.disabledPaint);
-            GlHelper.drawTextWithShadow("Hotkeys", x + 5.0f + this.maxWidth + 3.0f, headerTextY, this.nameFont, this.disabledPaint);
+            GlHelper.drawTextWithShadow("快捷键", x + 5.0f + this.maxWidth + 3.0f, headerTextY, this.nameFont, this.disabledPaint);
         }
         if (this.rowList.isEmpty()) {
             return;

@@ -64,7 +64,7 @@ extends SettingElement<MultiSelectSetting> {
             return;
         }
         float nameY = this.y + (18.0f - FontStore.AXIFORMA_REGULAR_14.getFontHeight()) / 2.0f + 1.0f;
-        FontStore.AXIFORMA_REGULAR_14.drawString(poseStack, this.setting.getName(), this.x + 6.0f, nameY, ColorUtil.withAlpha(-1, alpha * 0.8f));
+        FontStore.AXIFORMA_REGULAR_14.drawString(poseStack, this.setting.getDisplayName(), this.x + 6.0f, nameY, ColorUtil.withAlpha(-1, alpha * 0.8f));
         float openAmount = this.visTimer.getValueF();
         if (openAmount > 0.0f) {
             dropdownHeight = itemHeight + (float) this.setting.getOptions().size() * itemHeight * openAmount;
@@ -77,7 +77,7 @@ extends SettingElement<MultiSelectSetting> {
                     this.highlightYTimer.animate(itemY - hoverAmount, 0.2, Easings.EASE_OUT_POW2);
                 }
                 if (dropdownY + dropdownHeight > itemY + FontStore.AXIFORMA_BOLD_13.getFontHeight()) {
-                    FontStore.AXIFORMA_BOLD_13.drawStringCentered(poseStack, option, this.x + 60.0f, itemY, ColorUtil.withAlpha(-1, alpha * 0.8f * openAmount));
+                    FontStore.AXIFORMA_BOLD_13.drawStringCentered(poseStack, this.setting.getDisplayOption(option), this.x + 60.0f, itemY, ColorUtil.withAlpha(-1, alpha * 0.8f * openAmount));
                     if (this.setting.getValue().contains(option)) {
                         FontStore.MATERIAL_14.drawString(poseStack, "", this.x + 6.0f + dropdownWidth - FontStore.MATERIAL_14.getStringWidth("") - 4.0f, itemY - hoverAmount + (itemHeight - FontStore.MATERIAL_14.getFontHeight()) / 2.0f + 0.5f, ColorUtil.withAlpha(-1, alpha * 0.56f * openAmount));
                     }
@@ -94,7 +94,7 @@ extends SettingElement<MultiSelectSetting> {
         }
         hoverAmount = this.hoverTimer.getValueF();
         RenderUtil.drawRoundedRect(poseStack, this.x + 6.0f, dropdownY, dropdownWidth, itemHeight, 3.0f, ColorUtil.withAlpha(ColorUtil.fromRGB((int)(60.0f + 30.0f * hoverAmount), (int)(60.0f + 30.0f * hoverAmount), (int)(60.0f + 30.0f * hoverAmount)), alpha));
-        String selectedLabel = this.setting.getValue().get(0);
+        String selectedLabel = this.setting.getDisplayOption(this.setting.getValue().get(0));
         if (this.setting.getValue().size() > 1) {
             selectedLabel = selectedLabel + ELLIPSIS;
             this.hasMultipleSelected = true;
@@ -104,7 +104,7 @@ extends SettingElement<MultiSelectSetting> {
         FontStore.MATERIAL_20.drawString(poseStack, (String)arrowIcon, this.x + 6.0f + dropdownWidth - FontStore.MATERIAL_20.getStringWidth((String)arrowIcon) - 2.0f, dropdownY + (itemHeight - FontStore.MATERIAL_20.getFontHeight()) / 2.0f + 0.5f, ColorUtil.withAlpha(-1, alpha * 0.8f));
         if (this.isDropdownHovered && this.hasMultipleSelected) {
             this.parentPanel.setHoveredSettingElement(this);
-            this.parentPanel.setTooltipText(this.setting.getValue().toString());
+            this.parentPanel.setTooltipText(this.setting.getDisplayValue().toString());
             this.parentPanel.setShowTooltip(true);
         } else if (this.parentPanel.getHoveredSettingElement() == this) {
             this.parentPanel.setShowTooltip(false);

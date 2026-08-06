@@ -54,7 +54,7 @@ extends ClientBase {
             return;
         }
         this.searchQuery = query;
-        this.searchResults = !query.isEmpty() ? ZenClient.instance.getModuleManager().getModules().stream().filter(module -> module.getName().toLowerCase().contains(query.toLowerCase())).sorted(Comparator.comparing(Module::getName)).collect(Collectors.toList()) : ZenClient.instance.getModuleManager().getModules().stream().sorted(Comparator.comparing(Module::getName)).collect(Collectors.toList());
+        this.searchResults = !query.isEmpty() ? ZenClient.instance.getModuleManager().getModules().stream().filter(module -> module.getName().toLowerCase().contains(query.toLowerCase()) || module.getDisplayName().toLowerCase().contains(query.toLowerCase())).sorted(Comparator.comparing(Module::getDisplayName)).collect(Collectors.toList()) : ZenClient.instance.getModuleManager().getModules().stream().sorted(Comparator.comparing(Module::getDisplayName)).collect(Collectors.toList());
         this.currentCategory = null;
         this.scrollOffset = 0.0f;
         this.scrollTarget = 0.0f;
@@ -217,10 +217,10 @@ extends ClientBase {
         float headerHeight = 30.0f * scale;
         int panelWidth = (int)(160.0f * scale);
         FontRenderer titleFont = FontPresets.axiformaBold(20.0f * scale);
-        String titleText = category == null ? "Search" : category.name().substring(0, 1).toUpperCase() + category.name().substring(1).toLowerCase();
+        String titleText = category == null ? "搜索" : shit.zen.utils.misc.UiText.translate(category.displayName);
         GlHelper.drawText(titleText, (float)panelX + 10.0f * scale, (float)panelY + 12.0f * scale, titleFont, this.applyAlpha(-1, alpha));
         FontRenderer subtitleFont = FontPresets.axiformaRegular(12.0f * scale);
-        String subtitle = category == null ? modules.size() + " Results" : "Sorting: A-Z";
+        String subtitle = category == null ? modules.size() + " 个结果" : "按名称排序";
         float subtitleWidth = GlHelper.getStringWidth(subtitle, subtitleFont);
         float subtitleX = (float)(panelX + panelWidth) - subtitleWidth - 10.0f * scale;
         GlHelper.drawText(subtitle, subtitleX, (float)panelY + 14.0f * scale, subtitleFont, this.applyAlpha(-5592406, alpha));
@@ -239,7 +239,7 @@ extends ClientBase {
                     this.updateModuleHover(module, panelX, (int)drawY, mouseX, mouseY, scale);
                 }
                 FontRenderer moduleFont = module.isEnabled() ? FontPresets.axiformaBold(16.0f * scale) : FontPresets.axiformaRegular(16.0f * scale);
-                String moduleName = module.getName();
+                String moduleName = module.getDisplayName();
                 if (this.searchResults != null) {
                     String categorySuffix = module.getCategory().name().substring(1).toLowerCase();
                     char categoryInitial = module.getCategory().name().charAt(0);
@@ -340,8 +340,8 @@ extends ClientBase {
             if (this.isMouseOverModule(module, panelX, adjustedRowY = (int)((float)rowY - this.scrollOffset), mouseX, mouseY, scale)) {
                 if (button == 0) {
                     module.toggle();
-                    String stateLabel = module.isEnabled() ? "On" : "Off";
-                    PanelClickGui.panelClickGui.addToast(module.getName() + " Module " + stateLabel);
+                    String stateLabel = module.isEnabled() ? "已启用" : "已禁用";
+                    PanelClickGui.panelClickGui.addToast(module.getDisplayName() + " " + stateLabel);
                 } else if (button == 1) {
                     this.hoveredModule = module;
                 } else if (button == 2) {

@@ -129,7 +129,7 @@ extends AntiKBMode {
                     receivePacketEvent.setCancelled(true);
                 }
                 if (receivePacketEvent.getPacket() instanceof ClientboundPlayerPositionPacket) {
-                    ChatUtil.print("?");
+                    ChatUtil.print("检测到位置修正，已重置状态");
                     this.resetState();
                 }
             }
@@ -138,7 +138,7 @@ extends AntiKBMode {
             this.knockbackPacket = null;
             this.flushPackets();
             this.isSuspending = false;
-            ChatUtil.print("Ignore: Player in web or liquid!");
+            ChatUtil.print("已忽略：玩家位于蛛网或液体中！");
         }
     }
 

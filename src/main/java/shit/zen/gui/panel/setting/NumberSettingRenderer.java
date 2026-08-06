@@ -151,9 +151,9 @@ implements SettingRenderer {
             double max = editingNumberSetting.getMax().doubleValue();
             parsed = Math.max(min, Math.min(max, parsed));
             NumberSettingRenderer.applyValueStatic(editingNumberSetting, parsed);
-            PanelClickGui.panelClickGui.addToast(editingNumberSetting.getName() + " set to " + String.format(Locale.US, "%.1f", new Object[]{parsed}));
+            PanelClickGui.panelClickGui.addToast(editingNumberSetting.getDisplayName() + "已设为 " + String.format(Locale.US, "%.1f", new Object[]{parsed}));
         } catch (NumberFormatException numberFormatException) {
-            PanelClickGui.panelClickGui.addToast("Invalid input, edit cancelled");
+            PanelClickGui.panelClickGui.addToast("输入无效，已取消修改");
         }
         NumberSettingRenderer.cancelEdit();
     }
@@ -178,7 +178,7 @@ implements SettingRenderer {
         FontRenderer signFont = FontPresets.axiformaBold(12.0f * scale);
 
         float nameY = centerY - nameFont.getMetrics().capHeight() / 2.0f;
-        TextGlow.drawGlowText(numberSetting.getName(), x, nameY, nameFont, this.applyAlpha(-1, alpha), this.applyAlpha(new Color(255, 255, 255, 120).getRGB(), alpha), 8.0f * scale);
+        TextGlow.drawGlowText(numberSetting.getDisplayName(), x, nameY, nameFont, this.applyAlpha(-1, alpha), this.applyAlpha(new Color(255, 255, 255, 120).getRGB(), alpha), 8.0f * scale);
         this.drawEditIcon(guiGraphics, iconX, iconY, numberSetting, alpha, scale);
         
         int sidePadding = Math.round(12.0f * scale);
@@ -252,7 +252,7 @@ implements SettingRenderer {
         double max = numberSetting.getMax().doubleValue();
         double newValue = Math.min(max, current + step);
         this.applyValue(numberSetting, newValue);
-        PanelClickGui.panelClickGui.addToast(numberSetting.getName() + " set to " + this.formatValue(newValue));
+        PanelClickGui.panelClickGui.addToast(numberSetting.getDisplayName() + "已设为 " + this.formatValue(newValue));
     }
 
     private void decrementValue(NumberSetting numberSetting) {
@@ -261,7 +261,7 @@ implements SettingRenderer {
         double min = numberSetting.getMin().doubleValue();
         double newValue = Math.max(min, current - step);
         this.applyValue(numberSetting, newValue);
-        PanelClickGui.panelClickGui.addToast(numberSetting.getName() + " set to " + this.formatValue(newValue));
+        PanelClickGui.panelClickGui.addToast(numberSetting.getDisplayName() + "已设为 " + this.formatValue(newValue));
     }
 
     private void applyValue(NumberSetting numberSetting, double value) {

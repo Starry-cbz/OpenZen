@@ -59,7 +59,7 @@ public class AntiStaff extends Module {
     }
 
     private void exitGame() {
-        ChatUtil.print("Staff detected!");
+        ChatUtil.print("检测到管理员！");
         if (mc.player != null && mc.player.connection != null) {
             mc.player.connection.sendCommand("hub");
         }

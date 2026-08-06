@@ -119,7 +119,7 @@ public class ModuleButton {
         int rowHeight = this.panel.rowHeight + (this.yOffset == 0 ? 0 : 1);
         RenderUtil.drawBlurredRect(poseStack, this.panel.x, rowY, this.panel.width, rowHeight, 4.0f, 6.0f, 0.9f, 0);
         RenderUtil.drawFilledRect(poseStack, this.panel.x, rowY, this.panel.width, rowHeight, new Color(21, 21, 21, bgAlpha).getRGB());
-        String name = this.module.getName();
+        String name = this.module.getDisplayName();
         float nameWidth = FontStore.OPENSANS_16.getStringWidth(name);
         float nameX = (float)this.panel.x + (float)this.panel.width / 2.0f - nameWidth / 2.0f;
         float nameY = (float)(this.panel.y + this.yOffset) + (float)this.panel.rowHeight / 2.0f - FontStore.OPENSANS_16.getFontHeight() / 2.0f;

@@ -83,7 +83,7 @@ public class ItemAlertTracker {
     }
 
     static {
-        ALERT_FORMAT = "§c[ALERT] §f%s used a God Axe!";
+        ALERT_FORMAT = "§c[警报] §f%s 使用了特殊斧！";
         trackedItems = new ConcurrentHashMap<>();
         alertedItems = new ConcurrentHashMap<>();
         entityItems = new ConcurrentHashMap<>();

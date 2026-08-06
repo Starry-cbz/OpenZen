@@ -35,7 +35,7 @@ public class SetSettingHandler extends AbstractHttpHandler {
                 if (module == null) {
                     reason = "找不到模块";
                 } else if (module instanceof WebUI) {
-                    reason = "sb";
+                    reason = "网页面板自身的设置不可在此修改";
                 } else {
                     String settingName = query.get("name");
                     Optional<Setting<?>> match = module.getSettings().stream()

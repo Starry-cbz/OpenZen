@@ -46,7 +46,7 @@ implements SettingRenderer {
         this.hoverAnimations.put(booleanSetting, hoverAnim);
         FontRenderer nameFont = FontPresets.axiformaRegular(14.0f * scale);
         float nameY = (float)y + (float)rowHeight / 2.0f - nameFont.getMetrics().capHeight() / 2.0f;
-        TextGlow.drawGlowText(booleanSetting.getName(), x, nameY, nameFont, this.applyAlpha(-1, alpha), this.applyAlpha(new Color(255, 255, 255, 120).getRGB(), alpha), 6.0f * scale);
+        TextGlow.drawGlowText(booleanSetting.getDisplayName(), x, nameY, nameFont, this.applyAlpha(-1, alpha), this.applyAlpha(new Color(255, 255, 255, 120).getRGB(), alpha), 6.0f * scale);
         this.drawToggle(guiGraphics, toggleX, toggleY, toggleAnim, hoverAnim, alpha, scale);
         return rowHeight;
     }
@@ -131,8 +131,8 @@ implements SettingRenderer {
         if (button == 0 && mouseX >= toggleX && mouseX <= toggleX + toggleWidth && mouseY >= toggleY && mouseY <= toggleY + toggleH) {
             boolean newValue = booleanSetting.getValue() == false;
             booleanSetting.setValue(newValue);
-            String stateLabel = newValue ? "On" : "Off";
-            PanelClickGui.panelClickGui.addToast(booleanSetting.getName() + " is " + stateLabel);
+            String stateLabel = newValue ? "开启" : "关闭";
+            PanelClickGui.panelClickGui.addToast(booleanSetting.getDisplayName() + "已" + stateLabel);
             return true;
         }
         return false;

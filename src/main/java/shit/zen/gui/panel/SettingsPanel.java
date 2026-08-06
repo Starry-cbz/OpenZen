@@ -120,7 +120,7 @@ extends ClientBase {
                 float titleAlpha = this.animationState == SettingsPanel.AnimationState.FADE_OUT ? (1.0f - this.transitionProgress) * alpha : alpha;
                 if (renderModule != null) {
                     FontRenderer titleFont = FontPresets.axiformaBold(20.0f * scale);
-                    String title = renderModule.getName();
+                    String title = renderModule.getDisplayName();
                     if (renderModule.isEnabled()) {
                         int glowColor = this.applyAlpha(new Color(255, 255, 255, 150).getRGB(), titleAlpha);
                         TextGlow.drawGlowText(title, (float)panelX + 10.0f * scale, (float)panelY + 12.0f * scale, titleFont, this.applyAlpha(-1, titleAlpha), glowColor, 12.0f * scale);
@@ -285,9 +285,9 @@ extends ClientBase {
 
     private String getModuleDescription(Module module) {
         try {
-            return "This module provides " + module.getName().toLowerCase() + " functionality.";
+            return module.getDisplayName() + "的功能设置。";
         } catch (Exception exception) {
-            return "No description available.";
+            return "暂无模块说明。";
         }
     }
 
@@ -390,8 +390,8 @@ extends ClientBase {
         int toggleY = panelY + (headerHeight - toggleHeight) / 2;
         if (button == 0 && mouseX >= toggleX && mouseX <= toggleX + toggleHeight * 2 && mouseY >= toggleY && mouseY <= toggleY + toggleHeight) {
             this.currentModule.toggle();
-            String stateLabel = this.currentModule.isEnabled() ? "On" : "Off";
-            PanelClickGui.panelClickGui.addToast(this.currentModule.getName() + " Module " + stateLabel);
+            String stateLabel = this.currentModule.isEnabled() ? "已启用" : "已禁用";
+            PanelClickGui.panelClickGui.addToast(this.currentModule.getDisplayName() + " " + stateLabel);
             return true;
         }
         List<Setting<?>> settings = this.currentModule.getSettings();

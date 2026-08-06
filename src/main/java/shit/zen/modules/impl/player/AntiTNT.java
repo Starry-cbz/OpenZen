@@ -115,7 +115,7 @@ extends Module {
             RenderUtil.drawOutlineBox(aABB, poseStack);
             float fuseSeconds = (float)this.targetTnt.getFuse() / 20.0f;
             if (fuseSeconds > 0.0f) {
-                String fuseLabel = String.format("%.1fs", new Object[]{fuseSeconds});
+                String fuseLabel = String.format("%.1f 秒", new Object[]{fuseSeconds});
                 BlockPos tntPos = this.targetTnt.blockPosition();
                 poseStack.pushPose();
                 poseStack.translate((double)tntPos.getX() + 0.5 - vec3.x, (double)tntPos.getY() + 1.1 - vec3.y, (double)tntPos.getZ() + 0.5 - vec3.z);

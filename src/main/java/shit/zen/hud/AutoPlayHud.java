@@ -15,7 +15,7 @@ import shit.zen.render.Path;
 public class AutoPlayHud
 extends ClientBase
 implements IHudElement {
-    private static final FontRenderer font = FontPresets.poppinsRegular(24.0f);
+    private static final FontRenderer font = FontPresets.pingfang(24.0f);
     private float animProgress = 0.0f;
     private long lastUpdateTime = -1L;
     private long disableTime = -1L;
@@ -51,7 +51,7 @@ implements IHudElement {
         long elapsed = System.currentTimeMillis() - disconnectTime;
         boolean done = delayMs <= 0.0 || (double)elapsed >= delayMs;
         long afterDoneMs = done ? elapsed - (long)delayMs : -1L;
-        String text = done ? "Done!" : "Sending you to next game...";
+        String text = done ? "完成！" : "正在进入下一局...";
         float textWidth = font.getBounds(text).getWidth();
         float iconSize = 28.0f;
         float totalWidth = 18.0f + iconSize + 8.0f + textWidth + 18.0f;
@@ -172,7 +172,7 @@ implements IHudElement {
                 drawContext.drawPath(path, paint);
             }
         }
-        String statusText = done ? "Done!" : "Sending you to next game...";
+        String statusText = done ? "完成！" : "正在进入下一局...";
         float textIconSize = iconSize;
         arcProgress = iconX + textIconSize + 8.0f;
         try (Paint paint = new Paint()){

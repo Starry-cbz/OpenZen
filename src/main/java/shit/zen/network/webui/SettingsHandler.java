@@ -37,7 +37,7 @@ public class SettingsHandler extends AbstractHttpHandler {
                     for (Setting<?> setting : settings) {
                         Map<String, Object> entry = new HashMap<>();
                         entry.put("name", setting.getName());
-                        entry.put("displayName", setting.getName());
+                        entry.put("displayName", setting.getDisplayName());
                         if (setting instanceof NumberSetting numberSetting) {
                             entry.put("type", "slider");
                             entry.put("max", numberSetting.getMax());
@@ -50,7 +50,9 @@ public class SettingsHandler extends AbstractHttpHandler {
                         } else if (setting instanceof ModeSetting modeSetting) {
                             entry.put("type", "selection");
                             entry.put("value", modeSetting.getValue());
+                            entry.put("displayValue", modeSetting.getDisplayValue());
                             entry.put("values", modeSetting.getModes());
+                            entry.put("displayValues", java.util.stream.Stream.of(modeSetting.getModes()).map(modeSetting::getDisplayMode).toArray(String[]::new));
                         }
                         entries.add(entry);
                     }

@@ -236,7 +236,7 @@ public class XRay extends Module {
         if (mc.levelRenderer != null) {
             mc.levelRenderer.allChanged();
         }
-        ChatUtil.print(ChatFormatting.GREEN + "Reset");
+        ChatUtil.print(ChatFormatting.GREEN + "已重置");
     }
 
     @EventTarget

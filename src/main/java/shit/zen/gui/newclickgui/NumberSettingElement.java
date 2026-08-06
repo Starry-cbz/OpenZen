@@ -44,7 +44,7 @@ extends SettingElement<NumberSetting> {
             return;
         }
         float nameY = this.y + (this.getHeight() / 2.0f - FontStore.AXIFORMA_REGULAR_14.getFontHeight()) / 2.0f + 1.0f;
-        String name = this.setting.getName();
+        String name = this.setting.getDisplayName();
         if (FontStore.AXIFORMA_REGULAR_14.getStringWidth(name) > 78.0f) {
             name = name.substring(0, 10);
             name = name + "...";
@@ -76,7 +76,7 @@ extends SettingElement<NumberSetting> {
         RenderUtil.drawRoundedRect(poseStack, knobX, sliderY - 0.5f, 6.0f, 6.0f, 2.9f, ColorUtil.withAlpha(-1, alpha));
         if (this.isHovered && this.isTruncated) {
             this.parentPanel.setHoveredSettingElement(this);
-            this.parentPanel.setTooltipText(this.setting.getName());
+            this.parentPanel.setTooltipText(this.setting.getDisplayName());
             this.parentPanel.setShowTooltip(true);
         } else if (this.parentPanel.getHoveredSettingElement() == this) {
             this.parentPanel.setShowTooltip(false);

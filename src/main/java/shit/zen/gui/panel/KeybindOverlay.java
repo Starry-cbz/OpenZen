@@ -70,7 +70,7 @@ extends ClientBase {
                 if (ZenClient.isReady()) {
                     ZenClient.instance.getConfigManager().saveAll();
                 }
-                PanelClickGui.panelClickGui.addToast(this.targetModule.getName() + " keybind cleared");
+                PanelClickGui.panelClickGui.addToast(this.targetModule.getDisplayName() + " 的按键绑定已清除");
             }
             this.cancel();
             return true;
@@ -82,7 +82,7 @@ extends ClientBase {
             }
             KeyBind keyBind = new KeyBind(keyCode);
             String keyName = keyBind.getName();
-            PanelClickGui.panelClickGui.addToast(this.targetModule.getName() + " bound to " + keyName.toUpperCase());
+            PanelClickGui.panelClickGui.addToast(this.targetModule.getDisplayName() + " 已绑定到 " + keyName.toUpperCase());
             this.cancel();
             return true;
         }
@@ -115,7 +115,7 @@ extends ClientBase {
             FontRenderer textFont;
             int alphaByte = (int)(255.0f * this.alpha);
             FontRenderer titleFont = FontPresets.axiformaBold(24.0f * scale);
-            String title = "KEYBIND";
+            String title = "按键绑定";
             float titleWidth = GlHelper.getStringWidth(title, titleFont);
             float titleX = (float)boxX + (boxWidth - titleWidth) / 2.0f;
             float titleY = (float)boxY + 45.0f * scale;
@@ -124,7 +124,7 @@ extends ClientBase {
             TextGlow.drawGlowText(title, titleX, titleY, titleFont, titleColor, glowColor, 10.0f * scale);
             if (this.targetModule != null) {
                 textFont = FontPresets.axiformaRegular(18.0f * scale);
-                text = "Module: " + this.targetModule.getName();
+                text = "模块：" + this.targetModule.getDisplayName();
                 textWidth = GlHelper.getStringWidth(text, textFont);
                 textX = (float)boxX + (boxWidth - textWidth) / 2.0f;
                 textY = (float)boxY + 75.0f * scale;
@@ -140,7 +140,7 @@ extends ClientBase {
             GlHelper.drawText(text, textX, textY, textFont, textColor);
             this.drawAnimatedDots(boxX, (int)((float)boxY + 125.0f * scale), (int)boxWidth, alphaByte, scale);
             FontRenderer cancelFont = FontPresets.axiformaRegular(14.0f * scale);
-            String cancelText = "Press ESC to cancel";
+            String cancelText = "按 ESC 取消";
             float cancelWidth = GlHelper.getStringWidth(cancelText, cancelFont);
             float cancelX = (float)boxX + (boxWidth - cancelWidth) / 2.0f;
             float cancelY = (float)boxY + 155.0f * scale;

@@ -6,8 +6,8 @@ import org.jetbrains.annotations.NotNull;
 import shit.zen.utils.misc.Assets;
 
 public class FontStore {
-    public static CustomFont OPENSANS_16 = loadFont(16.0f, "opensans.ttf");
-    public static CustomFont OPENSANS_18 = loadFont(18.0f, "opensans.ttf");
+    public static CustomFont OPENSANS_16 = loadFont(16.0f, "pingfang_sc_regular.ttf");
+    public static CustomFont OPENSANS_18 = loadFont(18.0f, "pingfang_sc_regular.ttf");
     public static CustomFont PINGFANG_16 = loadFont(16.0f, "pingfang_sc_regular.ttf");
     public static CustomFont PINGFANG_18 = loadFont(18.0f, "pingfang_sc_regular.ttf");
     public static CustomFont ICON_18 = loadFont(18.0f, "icon.ttf");
@@ -15,14 +15,14 @@ public class FontStore {
     public static CustomFont MATERIAL_20 = loadFontWithFallback(20.0f, "material.ttf");
     public static CustomFont MATERIAL_14 = loadFontWithFallback(14.0f, "material.ttf");
     public static CustomFont ZENICON_28 = loadFont(28.0f, "zenicon-Regular.ttf");
-    public static CustomFont AXIFORMA_REGULAR_14 = loadFont(14.0f, "axiforma_regular.ttf");
-    public static CustomFont AXIFORMA_REGULAR_16 = loadFont(16.0f, "axiforma_regular.ttf");
-    public static CustomFont AXIFORMA_REGULAR_18 = loadFont(18.0f, "axiforma_regular.ttf");
-    public static CustomFont AXIFORMA_BOLD_13 = loadFont(13.0f, "axiforma_bold.ttf");
-    public static CustomFont AXIFORMA_BOLD_18 = loadFont(18.0f, "axiforma_bold.ttf");
-    public static CustomFont AXIFORMA_EXTRABOLD_16 = loadFont(16.0f, "axiforma_extrabold.ttf");
-    public static CustomFont AXIFORMA_EXTRABOLD_18 = loadFont(18.0f, "axiforma_extrabold.ttf");
-    public static CustomFont AXIFORMA_BOLD_16 = loadFont(16.0f, "axiforma_bold.ttf");
+    public static CustomFont AXIFORMA_REGULAR_14 = loadFont(14.0f, "pingfang_sc_regular.ttf");
+    public static CustomFont AXIFORMA_REGULAR_16 = loadFont(16.0f, "pingfang_sc_regular.ttf");
+    public static CustomFont AXIFORMA_REGULAR_18 = loadFont(18.0f, "pingfang_sc_regular.ttf");
+    public static CustomFont AXIFORMA_BOLD_13 = loadFont(13.0f, "pingfang_sc_regular.ttf");
+    public static CustomFont AXIFORMA_BOLD_18 = loadFont(18.0f, "pingfang_sc_regular.ttf");
+    public static CustomFont AXIFORMA_EXTRABOLD_16 = loadFont(16.0f, "pingfang_sc_regular.ttf");
+    public static CustomFont AXIFORMA_EXTRABOLD_18 = loadFont(18.0f, "pingfang_sc_regular.ttf");
+    public static CustomFont AXIFORMA_BOLD_16 = loadFont(16.0f, "pingfang_sc_regular.ttf");
 
     @NotNull
     public static CustomFont loadFont(float size, String name) {

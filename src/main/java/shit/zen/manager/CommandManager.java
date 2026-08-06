@@ -41,13 +41,13 @@ public class CommandManager {
             String string = chatEvent.getMessage().substring(PREFIX.length());
             String[] stringArray = string.split(" ");
             if (stringArray.length < 1) {
-                ChatUtil.print("Unknown command");
+                ChatUtil.print("未知命令");
                 return;
             }
             String alias = stringArray[0].toLowerCase();
             Command command = this.aliasMap.get(alias);
             if (command == null) {
-                ChatUtil.print("Unknown command");
+                ChatUtil.print("未知命令");
                 return;
             }
             String[] args = new String[stringArray.length - 1];

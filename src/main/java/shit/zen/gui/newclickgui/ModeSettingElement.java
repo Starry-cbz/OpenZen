@@ -48,7 +48,7 @@ extends SettingElement<ModeSetting> {
             return;
         }
         float nameY = this.y + (totalHeight / 2.0f - FontStore.AXIFORMA_REGULAR_14.getFontHeight()) / 2.0f + 1.0f;
-        FontStore.AXIFORMA_REGULAR_14.drawString(poseStack, this.setting.getName(), this.x + 6.0f, nameY, ColorUtil.withAlpha(-1, alpha * 0.8f));
+        FontStore.AXIFORMA_REGULAR_14.drawString(poseStack, this.setting.getDisplayName(), this.x + 6.0f, nameY, ColorUtil.withAlpha(-1, alpha * 0.8f));
         float openAmount = this.visTimer.getValueF();
         if (openAmount > 0.0f) {
             dropdownHeight = itemHeight + (float) this.setting.getModes().length * itemHeight * openAmount;
@@ -61,7 +61,7 @@ extends SettingElement<ModeSetting> {
                     this.highlightYTimer.animate(itemY - hoverAmount, 0.2, Easings.EASE_OUT_POW2);
                 }
                 if (dropdownY + dropdownHeight > itemY + FontStore.AXIFORMA_BOLD_13.getFontHeight()) {
-                    FontStore.AXIFORMA_BOLD_13.drawStringCentered(poseStack, mode, this.x + 60.0f, itemY, ColorUtil.withAlpha(-1, alpha * 0.8f * openAmount));
+                    FontStore.AXIFORMA_BOLD_13.drawStringCentered(poseStack, this.setting.getDisplayMode(mode), this.x + 60.0f, itemY, ColorUtil.withAlpha(-1, alpha * 0.8f * openAmount));
                 }
                 itemY += itemHeight;
             }
@@ -75,7 +75,7 @@ extends SettingElement<ModeSetting> {
         }
         hoverAmount = this.hoverTimer.getValueF();
         RenderUtil.drawRoundedRect(poseStack, this.x + 6.0f, dropdownY, dropdownWidth, itemHeight, 3.0f, ColorUtil.withAlpha(ColorUtil.fromRGB((int)(60.0f + 30.0f * hoverAmount), (int)(60.0f + 30.0f * hoverAmount), (int)(60.0f + 30.0f * hoverAmount)), alpha));
-        FontStore.AXIFORMA_BOLD_13.drawStringCentered(poseStack, this.setting.getValue(), this.x + 60.0f, dropdownY + (itemHeight - FontStore.AXIFORMA_BOLD_13.getFontHeight()) / 2.0f, ColorUtil.withAlpha(-1, alpha * 0.8f));
+        FontStore.AXIFORMA_BOLD_13.drawStringCentered(poseStack, this.setting.getDisplayValue(), this.x + 60.0f, dropdownY + (itemHeight - FontStore.AXIFORMA_BOLD_13.getFontHeight()) / 2.0f, ColorUtil.withAlpha(-1, alpha * 0.8f));
         String arrowIcon = String.valueOf('\ueb5d');
         FontStore.MATERIAL_20.drawStringCentered(poseStack, arrowIcon, this.x + 6.0f + dropdownWidth - FontStore.MATERIAL_20.getStringWidth(arrowIcon) + 2.0f, dropdownY + (itemHeight - FontStore.MATERIAL_20.getFontHeight()) / 2.0f + 0.5f, ColorUtil.withAlpha(-1, alpha * 0.8f));
     }

@@ -44,9 +44,9 @@ implements SettingRenderer {
             FontRenderer nameFont = FontPresets.axiformaRegular(14.0f * scale);
             float nameY = (float)y + (float)rowHeight / 2.0f - nameFont.getMetrics().capHeight() / 2.0f;
             int nameGlow = new Color(255, 255, 255, 100).getRGB();
-            TextGlow.drawGlowText(modeSetting.getName(), x, nameY, nameFont, this.applyAlpha(-1, alpha), this.applyAlpha(nameGlow, alpha), 8.0f * scale);
+            TextGlow.drawGlowText(modeSetting.getDisplayName(), x, nameY, nameFont, this.applyAlpha(-1, alpha), this.applyAlpha(nameGlow, alpha), 8.0f * scale);
             FontRenderer valueFont = FontPresets.axiformaRegular(14.0f * scale);
-            String selectedValue = modeSetting.getValue() != null ? modeSetting.getValue() : "None";
+            String selectedValue = modeSetting.getValue() != null ? modeSetting.getDisplayValue() : "无";
             float selectedWidth = GlHelper.getStringWidth(selectedValue, valueFont);
             float selectedX = (float)dropdownX + ((float)dropdownWidth - selectedWidth) / 2.0f;
             float selectedY = (float)dropdownY + (float)itemHeight / 2.0f - valueFont.getMetrics().capHeight() / 2.0f + 2.0f * scale;
@@ -57,7 +57,8 @@ implements SettingRenderer {
                 Map<String, Float> hoverMap = this.itemHoverAnimations.get(modeSetting);
                 for (int i = 0; i < otherModes.length; ++i) {
                     String mode = otherModes[i];
-                    float modeWidth = GlHelper.getStringWidth(mode, valueFont);
+                    String displayMode = modeSetting.getDisplayMode(mode);
+                    float modeWidth = GlHelper.getStringWidth(displayMode, valueFont);
                     float modeX = (float)dropdownX + ((float)dropdownWidth - modeWidth) / 2.0f;
                     int itemY = dropdownY + itemHeight + i * itemHeight;
                     float modeTextY = (float)itemY + (float)itemHeight / 2.0f - valueFont.getMetrics().capHeight() / 2.0f + 2.0f * scale;
@@ -72,7 +73,7 @@ implements SettingRenderer {
                     int glowAlpha = (int)this.lerpFloat(80.0f, 150.0f, hoverAmount);
                     int glowColor = new Color(255, 255, 255, (int)((float)glowAlpha * clampedOpen * alpha)).getRGB();
                     float glowRadius = this.lerpFloat(6.0f, 10.0f, hoverAmount);
-                    TextGlow.drawGlowText(mode, modeX, modeTextY, valueFont, finalColor, glowColor, glowRadius * scale);
+                    TextGlow.drawGlowText(displayMode, modeX, modeTextY, valueFont, finalColor, glowColor, glowRadius * scale);
                 }
             }
         } catch (Exception exception) {
@@ -147,7 +148,7 @@ implements SettingRenderer {
                 String chosen = otherModes[i];
                 modeSetting.setValue(chosen);
                 this.openStates.put(modeSetting, false);
-                PanelClickGui.panelClickGui.addToast(modeSetting.getName() + " set to " + chosen);
+                PanelClickGui.panelClickGui.addToast(modeSetting.getDisplayName() + "已设为 " + modeSetting.getDisplayMode(chosen));
                 return true;
             }
             if (!overHeader) {

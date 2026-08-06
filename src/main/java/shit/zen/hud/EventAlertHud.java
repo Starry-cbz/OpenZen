@@ -35,9 +35,9 @@ implements IHudElement {
 
             public String getFormattedDescription() {
                 if (timeRemaining.isPresent()) {
-                    return String.format("%.1fs · %.1fm", timeRemaining.get(), distance);
+                    return String.format("%.1f 秒 · %.1f 米", timeRemaining.get(), distance);
                 }
-                return String.format("%.1fm", distance);
+                return String.format("%.1f 米", distance);
             }
         }
 
@@ -69,7 +69,7 @@ implements IHudElement {
             Entity owner = ((ThrownEnderpearl)entity).getOwner();
             return owner != null && !owner.equals(mc.player);
         }).map(java.util.Map.Entry::getValue).min(Comparator.comparingDouble(p -> p.getVelocity().distanceToSqr(mc.player.position())));
-        return nearest.map(e -> new EventAlertHud.AlertEntry(e.getVelocity(), e.getZ(), Optional.of((float)e.getX()), "Find an ender pearl!", "\uE55E"));
+        return nearest.map(e -> new EventAlertHud.AlertEntry(e.getVelocity(), e.getZ(), Optional.of((float)e.getX()), "发现末影珍珠！", "\uE55E"));
     }
 
     private Optional<EventAlertHud.AlertEntry> findEntityAlert() {
@@ -82,7 +82,7 @@ implements IHudElement {
         if (this.activeAlerts.isEmpty()) {
             return Optional.empty();
         }
-        return this.activeAlerts.keySet().stream().filter(v -> mc.player.position().distanceToSqr(v) < 65536.0).min(Comparator.comparingDouble(v -> mc.player.position().distanceToSqr(v))).map(v -> new EventAlertHud.AlertEntry(v, mc.player.position().distanceTo(v), Optional.empty(), "Found a lightning strike!", "\uEA0B"));
+        return this.activeAlerts.keySet().stream().filter(v -> mc.player.position().distanceToSqr(v) < 65536.0).min(Comparator.comparingDouble(v -> mc.player.position().distanceToSqr(v))).map(v -> new EventAlertHud.AlertEntry(v, mc.player.position().distanceTo(v), Optional.empty(), "发现雷击！", "\uEA0B"));
     }
 
     private Optional<EventAlertHud.AlertEntry> findBestAlert() {

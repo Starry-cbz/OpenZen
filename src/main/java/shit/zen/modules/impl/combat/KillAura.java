@@ -324,7 +324,7 @@ public class KillAura extends Module {
         if (hitResult != null && hitResult.getType() == HitResult.Type.ENTITY) {
             Entity hitEntity = ((EntityHitResult) hitResult).getEntity();
             if (AntiBots.isBot(hitEntity)) {
-                ChatUtil.print("Skipped attack on suspected bot");
+                ChatUtil.print("已跳过对疑似机器人的攻击");
                 return;
             }
         }

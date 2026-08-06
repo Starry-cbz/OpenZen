@@ -40,10 +40,10 @@ extends SettingComponent {
         Color edgeColor = new Color(100, 100, 100, (int)(180.0f * alpha));
         RenderUtil.drawFilledRect(poseStack, panelX + outerPadding + 2, rowY + verticalPadding, innerPadding - 2, contentHeight, edgeColor.getRGB());
         RenderUtil.drawFilledRect(poseStack, panelX + panelWidth - outerPadding - innerPadding, rowY + verticalPadding, innerPadding - 2, contentHeight, edgeColor.getRGB());
-        String name = this.modeSetting.getName();
+        String name = this.modeSetting.getDisplayName();
         float textY = (float)(rowY + verticalPadding) + ((float)contentHeight - FontStore.OPENSANS_16.getFontHeight()) / 2.0f - 1.5f;
         FontStore.OPENSANS_16.drawStringWithShadow(poseStack, name, boxX + innerPadding, textY, textColor);
-        String selectedValue = this.modeSetting.getValue();
+        String selectedValue = this.modeSetting.getDisplayValue();
         float valueX = (float)(boxX + boxWidth) - FontStore.OPENSANS_16.getStringWidth(selectedValue) - (float)innerPadding;
         FontStore.OPENSANS_16.drawStringWithShadow(poseStack, selectedValue, valueX, textY, new Color(138, 180, 248).getRGB());
         if (this.dropdownOpen) {
@@ -59,11 +59,12 @@ extends SettingComponent {
                 if (itemHovered) {
                     RenderUtil.drawFilledRect(poseStack, boxX, itemY, boxWidth, contentHeight, new Color(0, 0, 0, 100).getRGB());
                 }
-                float modeTextWidth = FontStore.OPENSANS_16.getStringWidth(mode);
+                String displayMode = this.modeSetting.getDisplayMode(mode);
+                float modeTextWidth = FontStore.OPENSANS_16.getStringWidth(displayMode);
                 float modeTextX = (float)boxX + ((float)boxWidth - modeTextWidth) / 2.0f;
                 float modeTextY = itemY + ((float)contentHeight - FontStore.OPENSANS_16.getFontHeight()) / 2.0f;
                 boolean isSelected = mode.equals(this.modeSetting.getValue());
-                FontStore.OPENSANS_16.drawStringWithShadow(poseStack, mode, modeTextX, modeTextY, isSelected ? new Color(138, 180, 248).getRGB() : textColor);
+                FontStore.OPENSANS_16.drawStringWithShadow(poseStack, displayMode, modeTextX, modeTextY, isSelected ? new Color(138, 180, 248).getRGB() : textColor);
             }
         }
     }

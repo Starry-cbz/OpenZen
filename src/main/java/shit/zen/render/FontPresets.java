@@ -41,14 +41,14 @@ public final class FontPresets {
     }
 
     public static FontRenderer axiformaBold(float size) {
-        return Fonts.getRenderer("axiforma_bold.ttf", size);
+        return pingfang(size);
     }
 
     public static FontRenderer axiformaRegular(float size) {
-        return Fonts.getRenderer("axiforma_regular.ttf", size);
+        return pingfang(size);
     }
 
     public static FontRenderer axiformaExtraBold(float size) {
-        return Fonts.getRenderer("axiforma_extrabold.ttf", size);
+        return pingfang(size);
     }
 }

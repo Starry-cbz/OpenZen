@@ -120,7 +120,7 @@ extends HudElement {
     }
 
     private final List<PlayerListHud.PlayerEntry> playerEntryList = new ArrayList<>();
-    private final FontRenderer nameFont = FontPresets.poppinsMedium(15.0f);
+    private final FontRenderer nameFont = FontPresets.pingfang(15.0f);
     final FontRenderer headerFont = FontPresets.pingfang(15.0f);
     private final FontRenderer subFont = FontPresets.materialIcons(18.0f);
     private final SmoothAnimationTimer slideAnim = new SmoothAnimationTimer();
@@ -191,7 +191,7 @@ extends HudElement {
                         int dmg = handItem.getDamageValue();
                         Integer prev = entry.cheatItems.get(handItem.getItem());
                         if (prev != null && dmg > prev && !entry.flaggedItems.contains(handItem.getItem())) {
-                            ChatUtil.print(String.format("§c[ALERT] §f%s used a God Axe!", p.getName().getString()));
+                            ChatUtil.print(String.format("§c[警报] §f%s 使用了特殊斧！", p.getName().getString()));
                             entry.flaggedItems.add(handItem.getItem());
                         }
                         entry.cheatItems.put(handItem.getItem(), dmg);
@@ -288,7 +288,7 @@ extends HudElement {
         float cornerRadius = 15.0f;
         float blurStrength = 0.7f;
         String iconText = "\ue7fd";
-        String titleText = "Playerlist";
+        String titleText = "玩家列表";
         float iconWidth = GlHelper.getStringWidth(iconText, this.subFont);
         float titleWidth = GlHelper.getStringWidth(titleText, this.nameFont);
         float headerHeight = (float)GlHelper.getFontAscent(this.nameFont) + padding * 2.0f;

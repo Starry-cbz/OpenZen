@@ -97,8 +97,8 @@ void InjectionOverlay::onInjectResult(QString err) {
     if (progressAnim_) progressAnim_->stop();
 
     statusText_ = injectOk_
-        ? QStringLiteral("Injection complete")
-        : QStringLiteral("Injection failed: ") + injectErr_;
+        ? QStringLiteral("注入完成")
+        : QStringLiteral("注入失败：") + injectErr_;
     update();
 
     // Finish progress bar quickly, then animate the success/failure mark
@@ -215,7 +215,7 @@ void InjectionOverlay::paintEvent(QPaintEvent*) {
 
     // Status text.
     {
-        QFont f(QStringLiteral("Segoe UI"));
+        QFont f(QStringLiteral("Microsoft YaHei UI"));
         f.setPointSize(12);
         f.setBold(true);
         p.setFont(f);
@@ -228,7 +228,7 @@ void InjectionOverlay::paintEvent(QPaintEvent*) {
 
     // Target subtitle.
     {
-        QFont f(QStringLiteral("Segoe UI"));
+        QFont f(QStringLiteral("Microsoft YaHei UI"));
         f.setPointSize(9);
         p.setFont(f);
         p.setPen(QColor("#8a90a0"));

@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import lombok.Getter;
 import shit.zen.settings.Setting;
 import shit.zen.settings.SettingVisibility;
+import shit.zen.utils.misc.UiText;
 
 public class ModeSetting
 extends Setting<String> {
@@ -28,6 +29,14 @@ extends Setting<String> {
 
     public boolean is(String string) {
         return this.getValue().equals(string);
+    }
+
+    public String getDisplayValue() {
+        return UiText.translate(this.getValue());
+    }
+
+    public String getDisplayMode(String mode) {
+        return UiText.translate(mode);
     }
 
     @Override

@@ -48,7 +48,7 @@ extends ClientBase {
             method.invoke(mc.gameMode);
         } catch (Exception exception) {
             exception.printStackTrace();
-            ChatUtil.print("Failed to set item!");
+            ChatUtil.print("设置物品失败！");
         }
     }
 
