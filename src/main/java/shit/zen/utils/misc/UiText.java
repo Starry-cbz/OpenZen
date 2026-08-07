@@ -128,6 +128,12 @@ public final class UiText {
         text.put("Bow", "弓");
         text.put("Bow Priority", "弓优先级");
         text.put("Bow Slot", "弓槽位");
+        text.put("Knockback Stick Slot", "击退棒槽位");
+        text.put("Fireball Slot", "烈焰弹槽位");
+        text.put("Bridge Egg Slot", "搭桥蛋槽位");
+        text.put("Golden Apple", "金苹果");
+        text.put("Fishing Rod", "钓鱼竿");
+
         text.put("Box", "方框");
         text.put("Break Block", "破坏方块");
         text.put("BrewingStand", "酿造台");
