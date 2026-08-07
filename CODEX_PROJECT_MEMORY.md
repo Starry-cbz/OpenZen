@@ -29,3 +29,5 @@
 - 预设由 `PresetManager` 统一维护，应用前校验模块、设置类型、数值范围和模式值；应用时保留渲染模块与 WebUI，重置其他玩法模块后启用预设配置，并写回现有配置文件。
 - WebUI 预设接口为 `/api/presets` 和 `/api/applyPreset?game=<id>&level=<level>`；档位文案明确提示任何档位都无法保证不受服务器处罚。
 - 预设功能当前尚未提交；WebUI JavaScript 语法和 `git diff --check` 已通过，完整构建仍交由 GitHub Actions。
+
+- 当前提交：`3d59ba7 Improve presets inventory management and packet pacing`，GitHub Actions 运行 `31138910764` 正在构建。
