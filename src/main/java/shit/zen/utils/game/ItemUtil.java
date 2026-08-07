@@ -438,7 +438,7 @@ extends ClientBase {
         if (itemStack.getItem() != Items.STICK) {
             return false;
         }
-        return EnchantmentHelper.getItemEnchantmentLevel(Enchantments.KNOCKBACK, itemStack) > 1;
+        return EnchantmentHelper.getItemEnchantmentLevel(Enchantments.KNOCKBACK, itemStack) > 0;
     }
 
     public static ItemStack getBestProjectile() {
