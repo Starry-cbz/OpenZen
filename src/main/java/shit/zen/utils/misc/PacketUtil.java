@@ -2,6 +2,8 @@ package shit.zen.utils.misc;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import lombok.Generated;
 import net.minecraft.client.gui.screens.ReceivingLevelScreen;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -20,6 +22,11 @@ import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
 import net.minecraft.network.protocol.game.ClientboundSetTitleTextPacket;
 import net.minecraft.network.protocol.game.ClientboundTabListPacket;
 import net.minecraft.network.protocol.game.ServerGamePacketListener;
+import net.minecraft.network.protocol.game.ServerboundContainerClickPacket;
+import net.minecraft.network.protocol.game.ServerboundInteractPacket;
+import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
+import net.minecraft.network.protocol.game.ServerboundUseItemOnPacket;
+import net.minecraft.network.protocol.game.ServerboundUseItemPacket;
 import net.minecraft.network.protocol.login.ClientboundCustomQueryPacket;
 import net.minecraft.network.protocol.login.ClientboundGameProfilePacket;
 import net.minecraft.network.protocol.status.ClientboundPongResponsePacket;
@@ -31,6 +38,10 @@ import shit.zen.utils.misc.ReflectionUtil;
 public final class PacketUtil
 extends ClientBase {
     public static final ArrayList<Packet<ServerGamePacketListener>> queuedPackets = new ArrayList<>();
+    private static final Queue<Packet<?>> rateLimitedPackets = new ConcurrentLinkedQueue<>();
+    private static volatile long lastRateLimitedSend;
+    private static final long RATE_LIMIT_INTERVAL_MS = 45L;
+    private static final int MAX_RATE_LIMIT_QUEUE = 64;
 
     public static boolean shouldBypass(Packet<ServerGamePacketListener> packet) {
         PacketSendEvent packetSendEvent = new PacketSendEvent(packet);
@@ -139,6 +150,57 @@ extends ClientBase {
             return true;
         }
         return mc.player.tickCount <= 60;
+    }
+
+    /**
+     * Applies a small client-side pacing window to burst-prone interaction packets.
+     * Movement and keep-alive packets are intentionally left untouched.
+     */
+    public static boolean shouldThrottle(Packet<?> packet) {
+        if (!isRateLimitedPacket(packet) || mc.player == null || mc.getConnection() == null) {
+            return false;
+        }
+        long now = System.currentTimeMillis();
+        if (rateLimitedPackets.isEmpty() && now - lastRateLimitedSend >= RATE_LIMIT_INTERVAL_MS) {
+            lastRateLimitedSend = now;
+            return false;
+        }
+        if (rateLimitedPackets.size() >= MAX_RATE_LIMIT_QUEUE) {
+            return true;
+        }
+        rateLimitedPackets.offer(packet);
+        return true;
+    }
+
+    public static void flushRateLimited() {
+        if (mc.player == null || mc.getConnection() == null || rateLimitedPackets.isEmpty()) {
+            return;
+        }
+        long now = System.currentTimeMillis();
+        if (now - lastRateLimitedSend < RATE_LIMIT_INTERVAL_MS) {
+            return;
+        }
+        Packet<?> packet = rateLimitedPackets.poll();
+        if (packet == null) {
+            return;
+        }
+        lastRateLimitedSend = now;
+        @SuppressWarnings("unchecked")
+        Packet<ServerGamePacketListener> typed = (Packet<ServerGamePacketListener>) packet;
+        queuedPackets.add(typed);
+        mc.getConnection().send(packet);
+    }
+
+    public static void clearRateLimited() {
+        rateLimitedPackets.clear();
+    }
+
+    private static boolean isRateLimitedPacket(Packet<?> packet) {
+        return packet instanceof ServerboundContainerClickPacket
+                || packet instanceof ServerboundInteractPacket
+                || packet instanceof ServerboundUseItemOnPacket
+                || packet instanceof ServerboundUseItemPacket
+                || packet instanceof ServerboundPlayerActionPacket;
     }
 
     public static void sendQueued(Packet<ServerGamePacketListener> packet) {

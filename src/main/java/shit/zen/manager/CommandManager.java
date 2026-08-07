@@ -8,6 +8,7 @@ import shit.zen.command.impl.BindCommand;
 import shit.zen.command.impl.ConfigCommand;
 import shit.zen.command.impl.LanguageCommand;
 import shit.zen.command.impl.ToggleCommand;
+import shit.zen.command.impl.UnloadCommand;
 import shit.zen.event.impl.ChatEvent;
 import shit.zen.utils.misc.ChatUtil;
 import shit.zen.event.EventTarget;
@@ -25,6 +26,7 @@ public class CommandManager {
         this.registerCommand(new ConfigCommand());
         this.registerCommand(new LanguageCommand());
         this.registerCommand(new ToggleCommand());
+        this.registerCommand(new UnloadCommand());
     }
 
     private void registerCommand(Command command) {

@@ -68,9 +68,14 @@ public final class PresetManager {
             for (SettingValue setting : modulePreset.settings()) {
                 setValue(module, setting.name(), setting.value());
             }
-            if (modulePreset.enabled()) {
+            if (modulePreset.enabled() && !"Scaffold".equals(module.getName())) {
                 module.setEnabled(true);
             }
+        }
+        // No gameplay preset may enable automatic bridging.
+        Module scaffold = moduleManager.getModule("Scaffold");
+        if (scaffold.isEnabled()) {
+            scaffold.setEnabled(false);
         }
 
         currentGame = game;
@@ -145,7 +150,7 @@ public final class PresetManager {
                                 module("AutoTools", true),
                                 module("InventoryManager", true, setting("Inventory Only", true)),
                                 module("AutoPlay", true, setting("Delay", 4.0))),
-                        level(NORMAL, "正常", "中风险档：加入战斗与搭路辅助，存在封禁可能。",
+                        level(NORMAL, "正常", "中风险档：加入适度战斗辅助，存在封禁可能；自动搭路保持关闭。",
                                 module("AntiBots", true, setting("Debug", false)),
                                 module("Teams", true, setting("Mode", "Scoreboard")),
                                 module("Sprint", true),
@@ -154,8 +159,7 @@ public final class PresetManager {
                                 module("InventoryManager", true, setting("Inventory Only", true)),
                                 module("AutoPlay", true, setting("Delay", 3.0)),
                                 module("AimAssist", true, setting("Range", 4.0), setting("Smooth amount", 25.0)),
-                                module("AutoClicker", true, setting("CPS", 8.0), setting("Mode", "Left")),
-                                module("Scaffold", true, setting("Mode", "Normal"), setting("Rotation Tick", 3.0))),
+                                module("AutoClicker", true, setting("CPS", 8.0), setting("Mode", "Left"))),
                         level(MAX, "最大", "高风险档：自动化程度最高，极易被服务器封禁。",
                                 module("AntiBots", true, setting("Debug", false)),
                                 module("Teams", true, setting("Mode", "Scoreboard")),
@@ -166,7 +170,6 @@ public final class PresetManager {
                                 module("AutoPlay", true, setting("Delay", 1.0)),
                                 module("AimAssist", true, setting("Range", 6.0), setting("Smooth amount", 5.0)),
                                 module("AutoClicker", true, setting("CPS", 15.0), setting("Mode", "Left"), setting("CPS Mode", "DBC")),
-                                module("Scaffold", true, setting("Mode", "Telly Bridge"), setting("Rotation Tick", 1.0)),
                                 module("KillAura", true, setting("Aim Range", 6.0), setting("Max APS", 20.0), setting("Min APS", 18.0), setting("Multi Attack", true)),
                                 module("AntiKB", true, setting("Mode", "NoXZ"), setting("Attack amount", 10.0), setting("Instant Attack", true)),
                                 module("Critical", true),

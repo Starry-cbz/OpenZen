@@ -148,8 +148,31 @@ extends ClientBase {
                 .orElse(0.0f);
     }
 
+    /**
+     * Returns the preferred sword for hotbar sorting. Golden swords intentionally
+     * win over every other sword, then damage/enchantments break ties.
+     */
     public static ItemStack getBestSword() {
-        return ItemUtil.getAllItems().stream().filter(itemStack -> !itemStack.isEmpty() && itemStack.getItem() instanceof SwordItem).max(Comparator.comparingInt(itemStack -> (int)(ItemUtil.getSwordDamage(itemStack) * 100.0f))).orElse(null);
+        return ItemUtil.getAllItems().stream()
+                .filter(stack -> !stack.isEmpty() && stack.getItem() instanceof SwordItem)
+                .max(Comparator
+                        .comparingInt((ItemStack stack) -> stack.getItem() == Items.GOLDEN_SWORD ? 1 : 0)
+                        .thenComparingDouble(ItemUtil::getSwordDamage))
+                .orElse(null);
+    }
+
+    public static ItemStack getBestNonGoldenSword() {
+        return ItemUtil.getAllItems().stream()
+                .filter(stack -> !stack.isEmpty()
+                        && stack.getItem() instanceof SwordItem
+                        && stack.getItem() != Items.GOLDEN_SWORD)
+                .max(Comparator.comparingDouble(ItemUtil::getSwordDamage))
+                .orElse(null);
+    }
+
+    public static boolean hasGoldenSword() {
+        return ItemUtil.getAllItems().stream()
+                .anyMatch(stack -> !stack.isEmpty() && stack.getItem() == Items.GOLDEN_SWORD);
     }
 
     public static float getBowScore(ItemStack itemStack) {
@@ -419,7 +442,35 @@ extends ClientBase {
     }
 
     public static ItemStack getBestProjectile() {
-        return ItemUtil.getAllItems().stream().filter(itemStack -> !itemStack.isEmpty() && (itemStack.getItem() == Items.EGG || itemStack.getItem() == Items.SNOWBALL) && ItemUtil.isUsable(itemStack)).max(Comparator.comparingInt(ItemStack::getCount)).orElse(null);
+        return ItemUtil.getAllItems().stream()
+                .filter(stack -> !stack.isEmpty()
+                        && (stack.getItem() == Items.EGG || stack.getItem() == Items.SNOWBALL)
+                        && ItemUtil.isUsable(stack))
+                .max(Comparator.comparingInt(ItemStack::getCount))
+                .orElse(null);
+    }
+
+    public static ItemStack getBestEgg() {
+        return ItemUtil.getAllItems().stream()
+                .filter(stack -> !stack.isEmpty() && stack.getItem() == Items.EGG && ItemUtil.isUsable(stack))
+                .max(Comparator.comparingInt(ItemStack::getCount))
+                .orElse(null);
+    }
+
+    public static ItemStack getBestFireball() {
+        return ItemUtil.getAllItems().stream()
+                .filter(stack -> !stack.isEmpty() && stack.getItem() == Items.FIRE_CHARGE && ItemUtil.isUsable(stack))
+                .max(Comparator.comparingInt(ItemStack::getCount))
+                .orElse(null);
+    }
+
+    public static ItemStack getBestKnockbackStick() {
+        return ItemUtil.getAllItems().stream()
+                .filter(stack -> !stack.isEmpty() && ItemUtil.isKBStick(stack) && ItemUtil.isUsable(stack))
+                .max(Comparator
+                        .comparingInt((ItemStack stack) -> EnchantmentHelper.getItemEnchantmentLevel(Enchantments.KNOCKBACK, stack))
+                        .thenComparingInt(ItemStack::getCount))
+                .orElse(null);
     }
 
     public static ItemStack getFishingRodStack() {

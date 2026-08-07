@@ -43,6 +43,9 @@ public class ConnectionPatch extends ClientBase {
         if (PacketUtil.shouldBypass((Packet) packet)) {
             return false;
         }
+        if (PacketUtil.shouldThrottle(packet)) {
+            return true;
+        }
         PacketEvent event = new PacketEvent(packet, true);
         ZenClient.getInstance().getEventBus().call(event);
         return event.isCancelled();

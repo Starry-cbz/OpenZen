@@ -130,6 +130,9 @@ public class ZenClient extends ClientBase {
             this.moduleManager.initModules();
             this.configManager.loadAll();
         }
+        if (isReady()) {
+            shit.zen.utils.misc.PacketUtil.flushRateLimited();
+        }
     }
 
     public static boolean isReady() {
@@ -142,11 +145,27 @@ public class ZenClient extends ClientBase {
                 && mc.player.tickCount > 5;
     }
 
-    public void shutdown() {
+    public synchronized void shutdown() {
+        if (!isReady && this.moduleManager == null) {
+            return;
+        }
         isReady = false;
+        if (this.moduleManager != null) {
+            for (shit.zen.modules.Module module : this.moduleManager.getModules()) {
+                if (module.isEnabled()) {
+                    module.setEnabled(false);
+                }
+            }
+        }
+        shit.zen.utils.misc.PacketUtil.clearRateLimited();
         if (this.configManager != null) {
             this.configManager.saveAll();
         }
+    }
+
+    /** Stops all client modules while leaving the Minecraft process running. */
+    public void unloadInGame() {
+        this.shutdown();
     }
 
     private void extractCloudAssets() {

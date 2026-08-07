@@ -66,7 +66,9 @@ public class InventoryManager extends Module {
     private final NumberSetting dropDelaySetting = new NumberSetting("Drop Delay", 200, 0, 500, 10);
     private final BooleanSetting autoArmorSetting = new BooleanSetting("Auto Armor", true);
     private final BooleanSetting throwItemsSetting = new BooleanSetting("Throw Items", true);
-    private final ModeSetting offhandItemSetting = new ModeSetting("Offhand Items", "Golden Apple", "Fishing Rod", "None").withDefault("Projectile");
+    private final ModeSetting offhandItemSetting = new ModeSetting(
+            "Offhand Items", "Golden Apple", "Projectile", "Fishing Rod", "Compass", "None")
+            .withDefault("Projectile");
     private final ModeSetting bowPrioritySetting = new ModeSetting("Bow Priority", "Crossbow", "Punch Bow").withDefault("Crossbow");
     private final BooleanSetting inventoryOnlySetting = new BooleanSetting("Inventory Only", true);
     private final BooleanSetting fastThrowSetting = new BooleanSetting("Fast Throw", false);
@@ -85,6 +87,9 @@ public class InventoryManager extends Module {
     private final NumberSetting eggsSnowballsSlotSetting = new NumberSetting("Eggs & Snowballs Slot", 0, 0, 9, 1);
     private final NumberSetting slimeBallSlotSetting = new NumberSetting("Slime Ball Slot", 0, 0, 9, 1);
     private final NumberSetting crystalSlotSetting = new NumberSetting("Crystal Slot", 0, 0, 9, 1);
+    private final NumberSetting knockbackStickSlotSetting = new NumberSetting("Knockback Stick Slot", 0, 0, 9, 1);
+    private final NumberSetting fireballSlotSetting = new NumberSetting("Fireball Slot", 0, 0, 9, 1);
+    private final NumberSetting bridgeEggSlotSetting = new NumberSetting("Bridge Egg Slot", 0, 0, 9, 1);
 
     private static final Timer actionTimer = new Timer();
 
@@ -227,6 +232,9 @@ public class InventoryManager extends Module {
         entries.add(Pair.of(this.pearlSlotSetting.getValue().intValue() != 0, this.pearlSlotSetting));
         entries.add(Pair.of(this.slimeBallSlotSetting.getValue().intValue() != 0, this.slimeBallSlotSetting));
         entries.add(Pair.of(this.crystalSlotSetting.getValue().intValue() != 0, this.crystalSlotSetting));
+        entries.add(Pair.of(this.knockbackStickSlotSetting.getValue().intValue() != 0, this.knockbackStickSlotSetting));
+        entries.add(Pair.of(this.fireballSlotSetting.getValue().intValue() != 0, this.fireballSlotSetting));
+        entries.add(Pair.of(this.bridgeEggSlotSetting.getValue().intValue() != 0, this.bridgeEggSlotSetting));
         entries.add(Pair.of(this.eggsSnowballsSlotSetting.getValue().intValue() != 0, this.eggsSnowballsSlotSetting));
         if (!"Golden Apple".equals(this.offhandItemSetting.getValue())) {
             entries.add(Pair.of(this.goldenAppleSlotSetting.getValue().intValue() != 0, this.goldenAppleSlotSetting));
@@ -400,6 +408,14 @@ public class InventoryManager extends Module {
                     return true;
                 }
             }
+        } else if ("Compass".equals(offhandPref)) {
+            ItemStack offhand = mc.player.getInventory().offhand.get(0);
+            int slot = ItemUtil.getSlot(Items.COMPASS);
+            if (slot != -1 && offhand.getItem() != Items.COMPASS
+                    && actionTimer.hasPassed(this.actionDelaySetting.getValue().intValue())) {
+                this.moveToOffhand(slot);
+                return true;
+            }
         } else if ("Fishing Rod".equals(offhandPref)) {
             ItemStack offhand = mc.player.getInventory().offhand.get(0);
             int slot = ItemUtil.getSlot(Items.FISHING_ROD);
@@ -469,13 +485,18 @@ public class InventoryManager extends Module {
                 bestSword = bestSharpAxe;
             }
             if (bestSword != null) {
+                boolean candidateGolden = bestSword.getItem() == Items.GOLDEN_SWORD;
+                boolean currentGolden = current.getItem() == Items.GOLDEN_SWORD;
                 float currentDamage = current.getItem() instanceof SwordItem
                         ? ItemUtil.getSwordDamage(current)
                         : ItemUtil.getAxeDamage(current);
                 float candidateDamage = bestSword.getItem() instanceof SwordItem
                         ? ItemUtil.getSwordDamage(bestSword)
                         : ItemUtil.getAxeDamage(bestSword);
-                if (candidateDamage > currentDamage && this.swapToSlot(slot, bestSword)) {
+                boolean preferred = candidateGolden != currentGolden
+                        ? candidateGolden
+                        : candidateDamage > currentDamage;
+                if (preferred && this.swapToSlot(slot, bestSword)) {
                     return true;
                 }
             }
@@ -564,6 +585,21 @@ public class InventoryManager extends Module {
                 && this.swapItemToSlot(this.crystalSlotSetting.getValue().intValue() - 1, Items.END_CRYSTAL)) {
             return true;
         }
+        if (this.knockbackStickSlotSetting.getValue().intValue() != 0
+                && this.swapToSlot(this.knockbackStickSlotSetting.getValue().intValue() - 1,
+                        ItemUtil.getBestKnockbackStick())) {
+            return true;
+        }
+        if (this.fireballSlotSetting.getValue().intValue() != 0
+                && this.swapToSlot(this.fireballSlotSetting.getValue().intValue() - 1,
+                        ItemUtil.getBestFireball())) {
+            return true;
+        }
+        if (this.bridgeEggSlotSetting.getValue().intValue() != 0
+                && this.swapToSlot(this.bridgeEggSlotSetting.getValue().intValue() - 1,
+                        ItemUtil.getBestEgg())) {
+            return true;
+        }
 
         // --- last resort: drop the first useless thing we run into ---
         List<Integer> order = IntStream.range(0, mc.player.getInventory().items.size())
@@ -606,7 +642,7 @@ public class InventoryManager extends Module {
     }
 
     private boolean swapToSlot(int targetSlot, ItemStack stack) {
-        if (mc.gameMode == null || mc.player == null) return false;
+        if (mc.gameMode == null || mc.player == null || stack == null || stack.isEmpty()) return false;
         ItemStack current = mc.player.getInventory().items.get(targetSlot);
         if (!ItemUtil.isUsable(current) || stack == current
                 || !actionTimer.hasPassed(this.actionDelaySetting.getValue().intValue())) {
@@ -669,12 +705,25 @@ public class InventoryManager extends Module {
         if (ItemUtil.isWeaponItem(stack)) return true;
         if (stack.getDisplayName().getString().contains("点击使用")) return true;
         if (stack.getItem() == Items.COBWEB) return true;
+        if (stack.getItem() == Items.FIRE_CHARGE || stack.getItem() == Items.EGG
+                || stack.getItem() == Items.STICK && ItemUtil.isKBStick(stack)) return true;
+        if (stack.getItem() == Items.COMPASS) return true;
         if (stack.getItem() instanceof ArmorItem armor) {
             float score = ItemUtil.getArmorScore(stack);
             if (ItemUtil.getEquippedArmorScore(armor.getEquipmentSlot()) >= score) return false;
             return score >= ItemUtil.getBestArmorScore(armor.getEquipmentSlot());
         }
-        if (stack.getItem() instanceof SwordItem)   return ItemUtil.getBestSword() == stack;
+        if (stack.getItem() instanceof SwordItem) {
+            if (stack.getItem() == Items.GOLDEN_SWORD) {
+                // Gold swords are deliberately retained, including duplicates.
+                return true;
+            }
+            ItemStack bestNonGolden = ItemUtil.getBestNonGoldenSword();
+            // When a gold sword is present, retain one fallback sword as well.
+            return ItemUtil.hasGoldenSword()
+                    ? bestNonGolden == stack
+                    : ItemUtil.getBestSword() == stack;
+        }
         if (stack.getItem() instanceof PickaxeItem) return ItemUtil.getBestPickaxe() == stack;
         if (stack.getItem() instanceof AxeItem && !ItemUtil.isLegitAxe(stack)) {
             return ItemUtil.getBestAxe() == stack;
