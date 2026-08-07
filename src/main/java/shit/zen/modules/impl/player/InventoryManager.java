@@ -481,7 +481,8 @@ public class InventoryManager extends Module {
             int slot = this.swordSlotSetting.getValue().intValue() - 1;
             ItemStack current = mc.player.getInventory().items.get(slot);
             ItemStack bestSharpAxe = ItemUtil.getBestSharpAxe();
-            if (ItemUtil.getAxeDamage(bestSharpAxe) > ItemUtil.getSwordDamage(bestSword)) {
+            if (bestSword == null || bestSword.getItem() != Items.GOLDEN_SWORD
+                    && ItemUtil.getAxeDamage(bestSharpAxe) > ItemUtil.getSwordDamage(bestSword)) {
                 bestSword = bestSharpAxe;
             }
             if (bestSword != null) {
